@@ -1,0 +1,6 @@
+
+public class ServiceFactory {
+  public void get(){
+	  
+  }
+}

@@ -1,0 +1,7 @@
+package org.cads.ev3.rmi.generated.cadSRMIInterface;
+
+public abstract interface IIDLCaDSEV3RMIUltraSonic
+{
+  public abstract int isUltraSonicOccupied()
+    throws Exception;
+}

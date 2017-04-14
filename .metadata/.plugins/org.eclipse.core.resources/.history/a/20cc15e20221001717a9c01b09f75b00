@@ -1,0 +1,6 @@
+
+public class RobotMoveGripperFactory {
+  public void get(){
+	  
+  }
+}

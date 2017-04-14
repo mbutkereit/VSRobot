@@ -1,0 +1,56 @@
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+
+public class Revciever {
+	private static DatagramSocket dsocket;
+
+	public static void main(String args[]) {
+		try {
+			int port = 90;
+
+			dsocket = new DatagramSocket(port);
+
+			// Create a buffer to read datagrams into. If a
+			// packet is larger than this buffer, the
+			// excess will simply be discarded!
+			byte[] buffer = new byte[2048];
+
+			// Create a packet to receive data into the buffer
+			DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+
+			// Now loop forever, waiting to receive packets and printing them.
+			while (true) {
+				// Wait to receive a datagram
+				dsocket.receive(packet);
+				System.out.println("New Packet:");
+				// Convert the contents to a string, and display them
+				String msg = new String(buffer, 0, packet.getLength());
+				
+				
+				try (InputStream is = new ByteArrayInputStream(packet);
+						       JsonReader rdr = Json.createReader(is)
+				) {
+						 
+						      JsonObject obj = rdr.readObject();
+						      JsonArray results = obj.getJsonArray("data");
+						      for (JsonObject result : results.getValuesAs(JsonObject.class)) {
+						          System.out.print(result.getJsonObject("from").getString("name"));
+						          System.out.print(": ");
+						        System.out.println(result.getString("message", ""));
+						         System.out.println("-----------");
+					     }
+						}
+				
+				System.out.println(packet.getAddress().getHostName() + ": "
+						+ msg);
+
+				// Reset the length of the packet before reusing it.
+				packet.setLength(buffer.length);
+			}
+		} catch (Exception e) {
+			System.err.println(e);
+		}
+	}
+}

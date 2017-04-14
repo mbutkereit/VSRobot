@@ -1,0 +1,76 @@
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveGripper;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+public class MoveGripperSkeleton {
+	private final static String ServiceClass = "IDLCaDSEV3RMIMoveGripper";
+	
+	
+	public void handle(String methodName){
+	 ParameterParser parser = new ParameterParser();
+		
+  	  JSONObject localJSONObject2 = new JSONObject();
+  	  localJSONObject2.put("Type", "Response");
+		
+	  
+	  switch (methodName)
+	  {
+	  case "closeGripper": 
+	    
+	    
+	    int param1 = ((Integer)localMap.get(Long.valueOf(0L))).intValue();
+	    try
+	    {
+	      int n = this.getImpl().closeGripper(param1);
+	    }
+	    catch (Exception localException2)
+	    {
+	      localException2.printStackTrace();
+	    }
+	    break;
+	  case "openGripper": 
+		    localMap = Collections.synchronizedMap(new HashMap());
+		    int k = ((Integer)localMap.get(Long.valueOf(0L))).intValue();
+		    try
+		    {
+		      int i1 = this.skel.getImpl().openGripper(k);
+		    }
+		    catch (Exception localException3)
+		    {
+		      localException3.printStackTrace();
+		    }
+	    break;
+	  case "isGripperClosed": 
+	    try
+	    {
+	      int m = this.skel.getImpl().isGripperClosed();
+	      localJSONObject2.put("ReturnValue", "" + m);
+	      sendAnswer(paramSkeletonClientRequest.socket, localJSONObject2);
+	    }
+	    catch (Exception localException1)
+	    {
+	      localException1.printStackTrace();
+	    }
+	    break;
+	  default: 
+	    System.err.println("[ERROR] Function not supported ");
+	    System.exit(-1);
+	  }
+	  return localJSONObject2;
+	}
+	}
+
+public IIDLCaDSEV3RMIMoveGripper getImplementation(){
+	 
+	
+	  IIDLCaDSEV3RMIMoveGripper gripper =  factory.get(MoveGripperSkeleton.ServiceClass);
+	  return gripper;
+}
+	
+	
+}

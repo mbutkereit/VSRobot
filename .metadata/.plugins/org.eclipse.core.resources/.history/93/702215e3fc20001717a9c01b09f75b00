@@ -1,0 +1,41 @@
+package Implementation;
+
+import org.cads.ev3.middleware.CaDSEV3RobotStudentImplementation;
+import org.cads.ev3.middleware.CaDSEV3RobotType;
+import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveGripper;
+
+public class RobotImplementationMoveGripper implements
+		IIDLCaDSEV3RMIMoveGripper {
+
+	private CaDSEV3RobotStudentImplementation call = null;
+	private static boolean gripperClosed = false;
+	
+	public RobotImplementationMoveGripper(CaDSEV3RobotStudentImplementation roboter) {
+			this.call = roboter;
+	}
+
+	@Override
+	public int closeGripper(int arg0) throws Exception {
+		this.call.doClose();
+		this.gripperClosed = true;
+		return 0;
+	}
+
+	@Override
+	public int isGripperClosed() throws Exception {
+	    if (this.gripperClosed == false)
+	    {
+	      CaDSEV3RobotLogger.log(CaDSEV3RobotLogLevel.INFO, getClass().getSimpleName(), "Gripper is closed!");
+	      return 1;
+	    }
+	    CaDSEV3RobotLogger.log(CaDSEV3RobotLogLevel.INFO, getClass().getSimpleName(), "Gripper is open!");
+	    return 0;
+	}
+
+	@Override
+	public int openGripper(int arg0) throws Exception {
+		
+		return 0;
+	}
+
+}

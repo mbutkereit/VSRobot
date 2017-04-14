@@ -1,0 +1,13 @@
+import org.cads.ev3.middleware.CaDSEV3RobotStudentImplementation;
+
+
+public class RobotMoveGripperFactory {
+	CaDSEV3RobotStudentImplementation robot;
+	
+	public RobotMoveGripperFactory(CaDSEV3RobotStudentImplementation robot){
+		this.robot = robot;
+	}
+  public void get(String ClassName){
+	  return new RobotImeplementationMoveGripper(this.robot)
+  }
+}

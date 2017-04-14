@@ -1,0 +1,19 @@
+package org.cads.ev3.rmi.generated.cadSRMIInterface;
+
+public abstract interface IIDLCaDSEV3RMIMoveVertical
+{
+  public abstract int moveVerticalToPercent(int paramInt1, int paramInt2)
+    throws Exception;
+  
+  public abstract int stop(int paramInt)
+    throws Exception;
+  
+  public abstract int getCurrentVerticalPercent()
+    throws Exception;
+}
+
+
+/* Location:              /Users/marvin/Downloads/CaDSBase.jar!/org/cads/ev3/rmi/generated/cadSRMIInterface/IIDLCaDSEV3RMIMoveVertical.class
+ * Java compiler version: 7 (51.0)
+ * JD-Core Version:       0.7.1
+ */

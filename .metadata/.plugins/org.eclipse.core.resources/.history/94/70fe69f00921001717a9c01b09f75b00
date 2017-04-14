@@ -1,0 +1,43 @@
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+
+import org.cads.ev3.middleware.CaDSEV3RobotStudentImplementation;
+import org.cads.ev3.middleware.CaDSEV3RobotType;
+import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveGripper;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import Implementation.RobotImplementationMoveGripper;
+
+public class Revciever {
+	private static DatagramSocket dsocket;
+
+	public static void main(String args[]) {
+		
+		try {
+			int port = 9090;
+			dsocket = new DatagramSocket(port);
+			byte[] buffer = new byte[2048];
+			DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+
+			while (true) {
+				dsocket.receive(packet);
+				
+				System.out.println("New Packet:");
+				
+
+				// Reset the length of the packet before reusing it.
+				packet.setLength(buffer.length);
+			}
+		} catch (Exception e) {
+			System.err.println(e);
+		}
+	}
+}

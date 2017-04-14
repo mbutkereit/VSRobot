@@ -1,0 +1,13 @@
+{
+  "FunctionName":"closeGripper",
+  "Type":"Request",
+  "Parameter":
+  [
+    {
+    "position":0,
+    "type":"int",
+    "value":0
+    }
+  ],
+  "ObjectName":"IDLCaDSEV3RMIMoveGripper"
+}

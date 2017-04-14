@@ -1,0 +1,11 @@
+1492158285197	Convert local variable 'dsocket' to field
+1492161120699	Rename type 'Skeleton'
+1492165075582	Delete element
+1492168095255	Rename type 'ServiceFactory'
+1492173534114	Delete element
+1492175525363	Rename local variable 'l1'
+1492175540483	Rename local variable 'str3'
+1492175557119	Rename local variable 'i2'
+1492175679154	Rename local variable 'localMap'
+1492175699289	Rename local variable 'localIterator'
+1492176277689	Delete element

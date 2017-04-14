@@ -1,0 +1,19 @@
+package org.cads.ev3.rmi.generated.cadSRMIInterface;
+
+public abstract interface IIDLCaDSEV3RMIMoveGripper
+{
+  public abstract int closeGripper(int paramInt)
+    throws Exception;
+  
+  public abstract int openGripper(int paramInt)
+    throws Exception;
+  
+  public abstract int isGripperClosed()
+    throws Exception;
+}
+
+
+/* Location:              /Users/marvin/Downloads/CaDSBase.jar!/org/cads/ev3/rmi/generated/cadSRMIInterface/IIDLCaDSEV3RMIMoveGripper.class
+ * Java compiler version: 7 (51.0)
+ * JD-Core Version:       0.7.1
+ */

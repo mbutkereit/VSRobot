@@ -1,0 +1,536 @@
+/*package org.cads.ev3.rmi.generated.cadSRMISkeleton;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.SocketAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
+import org.cads.ev3.logger.CaDSEV3RobotLogLevel;
+import org.cads.ev3.logger.CaDSEV3RobotLogger;
+import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveGripper;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+public class IDLCaDSEV3RMIMoveGripperSkeleton
+  implements Runnable
+{
+  private final IIDLCaDSEV3RMIMoveGripper impl;
+  private static final BlockingQueue<SkeletonClientRequest> queue = new LinkedBlockingQueue();
+  private final int skeletonPort;
+  private Socket client = null;
+  private ServerSocket svrSocket = null;
+  private Thread skeleton_server = null;
+  private Thread skeleton_service = null;
+  private SkeletonServer skeleton_server_impl = null;
+  private String nhost = null;
+  private int port = 0;
+  private String proxyIp;
+  private int proxyPort;
+  private boolean proxyIsSet;
+  
+  protected void finalize()
+    throws Throwable
+  {
+    try
+    {
+      int i = 0;
+      do
+      {
+        this.client = new Socket(this.nhost, this.port);
+        PrintWriter localPrintWriter = new PrintWriter(this.client.getOutputStream(), true);
+        JSONObject localJSONObject = new JSONObject();
+        localJSONObject.put("Type", "bye");
+        localJSONObject.put("ObjectName", "IDLCaDSEV3RMIMoveGripper_");
+        localPrintWriter.println(localJSONObject.toJSONString());
+        localPrintWriter.flush();
+        this.client.close();
+      } while (i != 0);
+      return;
+    }
+    catch (UnknownHostException localUnknownHostException)
+    {
+      localUnknownHostException.printStackTrace();
+      System.exit(-1);
+    }
+    catch (IOException localIOException3)
+    {
+      localIOException3.printStackTrace();
+      System.exit(-1);
+    }
+    finally
+    {
+      if (this.client != null) {
+        try
+        {
+          this.client.close();
+        }
+        catch (IOException localIOException5) {}
+      }
+    }
+  }
+  
+  public IDLCaDSEV3RMIMoveGripperSkeleton(IIDLCaDSEV3RMIMoveGripper paramIIDLCaDSEV3RMIMoveGripper)
+  {
+    this.impl = paramIIDLCaDSEV3RMIMoveGripper;
+    this.proxyIp = "-1.-1.-1.-1";
+    this.proxyPort = -2;
+    this.proxyIsSet = false;
+    try
+    {
+      this.svrSocket = new ServerSocket(0);
+      this.svrSocket.setReuseAddress(true);
+    }
+    catch (SocketException localSocketException)
+    {
+      localSocketException.printStackTrace();
+    }
+    catch (IOException localIOException)
+    {
+      localIOException.printStackTrace();
+    }
+    SocketAddress localSocketAddress = this.svrSocket.getLocalSocketAddress();
+    if (!(localSocketAddress instanceof InetSocketAddress)) {
+      throw new IllegalArgumentException("Proxy.address() is not an InetSocketAddress: " + localSocketAddress.getClass());
+    }
+    InetSocketAddress localInetSocketAddress = (InetSocketAddress)localSocketAddress;
+    CaDSEV3RobotLogger.log(CaDSEV3RobotLogLevel.INFO, getClass().getSimpleName(), "Rebind from " + localInetSocketAddress.getHostName());
+    this.skeletonPort = localInetSocketAddress.getPort();
+  }
+  
+  public IDLCaDSEV3RMIMoveGripperSkeleton(IIDLCaDSEV3RMIMoveGripper paramIIDLCaDSEV3RMIMoveGripper, String paramString, int paramInt)
+  {
+    this.impl = paramIIDLCaDSEV3RMIMoveGripper;
+    this.proxyIp = paramString;
+    this.proxyPort = paramInt;
+    this.proxyIsSet = true;
+    try
+    {
+      this.svrSocket = new ServerSocket(0);
+      this.svrSocket.setReuseAddress(true);
+    }
+    catch (SocketException localSocketException)
+    {
+      localSocketException.printStackTrace();
+    }
+    catch (IOException localIOException)
+    {
+      localIOException.printStackTrace();
+    }
+    SocketAddress localSocketAddress = this.svrSocket.getLocalSocketAddress();
+    if (!(localSocketAddress instanceof InetSocketAddress)) {
+      throw new IllegalArgumentException("Proxy.address() is not an InetSocketAddress: " + localSocketAddress.getClass());
+    }
+    InetSocketAddress localInetSocketAddress = (InetSocketAddress)localSocketAddress;
+    CaDSEV3RobotLogger.log(CaDSEV3RobotLogLevel.INFO, getClass().getSimpleName(), "Rebind from " + localInetSocketAddress.getHostName());
+    this.skeletonPort = localInetSocketAddress.getPort();
+  }
+  
+  public synchronized IIDLCaDSEV3RMIMoveGripper getImpl()
+  {
+    return this.impl;
+  }
+  
+  public void rebind(String paramString1, String paramString2, int paramInt)
+  {
+    int i = 0;
+    this.nhost = paramString2;
+    this.port = paramInt;
+    try
+    {
+      do
+      {
+        boolean bool = false;
+        int j = 0;
+        do
+        {
+          if (this.proxyIsSet)
+          {
+            CaDSEV3RobotLogger.log(CaDSEV3RobotLogLevel.DEBUG, getClass().getSimpleName(), "with Proxy");
+            this.client = new Socket(this.proxyIp, this.proxyPort);
+          }
+          else
+          {
+            CaDSEV3RobotLogger.log(CaDSEV3RobotLogLevel.DEBUG, getClass().getSimpleName(), "without Proxy");
+            this.client = new Socket(this.nhost, this.port);
+          }
+          PrintWriter localPrintWriter = new PrintWriter(this.client.getOutputStream(), true);
+          bool = getNextRebindRequest(paramString1, localPrintWriter, j++);
+          localPrintWriter.flush();
+          this.client.close();
+          i = 0;
+        } while (bool);
+        if (this.client != null) {
+          try
+          {
+            this.client.close();
+          }
+          catch (IOException localIOException1) {}
+        }
+      } while (i != 0);
+    }
+    catch (UnknownHostException localUnknownHostException)
+    {
+      localUnknownHostException.printStackTrace();
+      System.exit(-1);
+    }
+    catch (IOException localIOException3)
+    {
+      CaDSEV3RobotLogger.log(CaDSEV3RobotLogLevel.WARNING, getClass().getSimpleName(), "Connection Refused - retry after short time! - Is NameServer running?");
+      i = 1;
+      try
+      {
+        TimeUnit.SECONDS.sleep(1L);
+      }
+      catch (InterruptedException localInterruptedException) {}
+    }
+    finally
+    {
+      if (this.client != null) {
+        try
+        {
+          this.client.close();
+        }
+        catch (IOException localIOException5) {}
+      }
+    }
+  }
+  
+  public void teardown()
+  {
+    this.skeleton_server.interrupt();
+    this.skeleton_server_impl.teardown();
+    this.skeleton_service.interrupt();
+  }
+  
+  public void run()
+  {
+    this.skeleton_server_impl = new SkeletonServer(this.svrSocket, queue);
+    this.skeleton_server = new Thread(this.skeleton_server_impl);
+    this.skeleton_server.setName("SekeltonServer - " + getClass().getSimpleName());
+    this.skeleton_server.start();
+    this.skeleton_service = new Thread(new SkeletonService(queue, this));
+    this.skeleton_service.setName("SekeltonService - " + getClass().getSimpleName());
+    this.skeleton_service.start();
+  }
+  
+  private boolean getNextRebindRequest(String paramString, PrintWriter paramPrintWriter, int paramInt)
+  {
+    boolean bool = false;
+    JSONObject localJSONObject = new JSONObject();
+    switch (paramInt)
+    {
+    case 0: 
+      localJSONObject.put("Type", "rebind");
+      localJSONObject.put("ObjectName", "IDLCaDSEV3RMIMoveGripper_" + paramString);
+      localJSONObject.put("Service", paramString);
+      localJSONObject.put("NameServerIP", this.nhost);
+      localJSONObject.put("NameServerPort", Integer.valueOf(this.port));
+      localJSONObject.put("Function", "closeGripper");
+      localJSONObject.put("ID", Long.valueOf(0L));
+      localJSONObject.put("ObjectPort", Integer.valueOf(this.skeletonPort));
+      localJSONObject.put("Function_0parameter_0", "int");
+      paramPrintWriter.println(localJSONObject.toJSONString());
+      bool = true;
+      break;
+    case 1: 
+      localJSONObject.put("Type", "rebind");
+      localJSONObject.put("ObjectName", "IDLCaDSEV3RMIMoveGripper_" + paramString);
+      localJSONObject.put("Service", paramString);
+      localJSONObject.put("NameServerIP", this.nhost);
+      localJSONObject.put("NameServerPort", Integer.valueOf(this.port));
+      localJSONObject.put("Function", "openGripper");
+      localJSONObject.put("ID", Long.valueOf(0L));
+      localJSONObject.put("ObjectPort", Integer.valueOf(this.skeletonPort));
+      localJSONObject.put("Function_1parameter_0", "int");
+      paramPrintWriter.println(localJSONObject.toJSONString());
+      bool = true;
+      break;
+    case 2: 
+      localJSONObject.put("Type", "rebind");
+      localJSONObject.put("ObjectName", "IDLCaDSEV3RMIMoveGripper_" + paramString);
+      localJSONObject.put("Service", paramString);
+      localJSONObject.put("NameServerIP", this.nhost);
+      localJSONObject.put("NameServerPort", Integer.valueOf(this.port));
+      localJSONObject.put("Function", "isGripperClosed");
+      localJSONObject.put("ID", Long.valueOf(0L));
+      localJSONObject.put("ObjectPort", Integer.valueOf(this.skeletonPort));
+      paramPrintWriter.println(localJSONObject.toJSONString());
+      bool = true;
+    }
+    return bool;
+  }
+  
+  private class SkeletonServer
+    implements Runnable
+  {
+    private final ServerSocket serverSocket;
+    private final BlockingQueue<IDLCaDSEV3RMIMoveGripperSkeleton.SkeletonClientRequest> clientRequestQueue;
+    
+    SkeletonServer(BlockingQueue<IDLCaDSEV3RMIMoveGripperSkeleton.SkeletonClientRequest> paramBlockingQueue)
+    {
+      BlockingQueue localBlockingQueue;
+      this.clientRequestQueue = localBlockingQueue;
+      this.serverSocket = paramBlockingQueue;
+    }
+    
+    public void run()
+    {
+      try
+      {
+        JSONParser localJSONParser = new JSONParser();
+        while (!Thread.currentThread().isInterrupted())
+        {
+          Socket localSocket = this.serverSocket.accept();
+          String str = new BufferedReader(new InputStreamReader(localSocket.getInputStream())).readLine();
+          if (str == null)
+          {
+            localSocket.close();
+          }
+          else if (str.length() == 0)
+          {
+            localSocket.close();
+          }
+          else
+          {
+            JSONObject localJSONObject = (JSONObject)localJSONParser.parse(str);
+            try
+            {
+              this.clientRequestQueue.put(new IDLCaDSEV3RMIMoveGripperSkeleton.SkeletonClientRequest(IDLCaDSEV3RMIMoveGripperSkeleton.this, localSocket, localJSONObject));
+            }
+            catch (InterruptedException localInterruptedException)
+            {
+              localInterruptedException.printStackTrace();
+            }
+          }
+        }
+      }
+      catch (IOException|ParseException localIOException)
+      {
+        CaDSEV3RobotLogger.log(CaDSEV3RobotLogLevel.WARNING, getClass().getSimpleName(), "Middleware socket closed");
+      }
+    }
+    
+    public void teardown()
+    {
+      try
+      {
+        this.serverSocket.close();
+      }
+      catch (IOException localIOException) {}
+    }
+  }
+  
+  private class SkeletonClientRequest
+  {
+    public JSONObject json = null;
+    public Socket socket = null;
+    
+    SkeletonClientRequest(Socket paramSocket, JSONObject paramJSONObject)
+    {
+      this.json = paramJSONObject;
+      this.socket = paramSocket;
+    }
+  }
+  
+  private class SkeletonService
+    implements Runnable
+  {
+    BlockingQueue<IDLCaDSEV3RMIMoveGripperSkeleton.SkeletonClientRequest> q = null;
+    IDLCaDSEV3RMIMoveGripperSkeleton skel = null;
+    static final String CLASSNAME = "IDLCaDSEV3RMIMoveGripper";
+    
+    public void run()
+    {
+      doRunService();
+    }
+    
+    public SkeletonService(IDLCaDSEV3RMIMoveGripperSkeleton paramIDLCaDSEV3RMIMoveGripperSkeleton)
+    {
+      this.q = paramIDLCaDSEV3RMIMoveGripperSkeleton;
+      IDLCaDSEV3RMIMoveGripperSkeleton localIDLCaDSEV3RMIMoveGripperSkeleton;
+      this.skel = localIDLCaDSEV3RMIMoveGripperSkeleton;
+    }
+    
+    public void sendAnswer(Socket paramSocket, JSONObject paramJSONObject)
+    {
+      try
+      {
+        PrintWriter localPrintWriter = new PrintWriter(paramSocket.getOutputStream(), true);
+        localPrintWriter.println(paramJSONObject.toJSONString());
+        paramSocket.close();
+      }
+      catch (IOException localIOException)
+      {
+        localIOException.printStackTrace();
+      }
+    }
+    
+    private synchronized void doRunService()
+    {
+      while (!Thread.currentThread().isInterrupted())
+      {
+        IDLCaDSEV3RMIMoveGripperSkeleton.SkeletonClientRequest localSkeletonClientRequest = null;
+        localSkeletonClientRequest = (IDLCaDSEV3RMIMoveGripperSkeleton.SkeletonClientRequest)this.q.poll();
+        if (localSkeletonClientRequest != null)
+        {
+          JSONObject localJSONObject = null;
+          String str = (String)localSkeletonClientRequest.json.get("ObjectName");
+          if (!str.equals("IDLCaDSEV3RMIMoveGripper"))
+          {
+            localJSONObject = new JSONObject();
+            localJSONObject.put("Type", "Response");
+            localJSONObject.put("State", "NOK");
+            localJSONObject.put("Exception", "CaDSRMIClassNotFoundException");
+          }
+          else
+          {
+            localJSONObject = switchFunktions(localSkeletonClientRequest);
+          }
+        }
+      }
+    }
+    
+    private synchronized JSONObject switchFunktions(IDLCaDSEV3RMIMoveGripperSkeleton.SkeletonClientRequest paramSkeletonClientRequest)
+    {
+      JSONObject localJSONObject1 = paramSkeletonClientRequest.json;
+      JSONObject localJSONObject2 = new JSONObject();
+      localJSONObject2.put("Type", "Response");
+      String str1 = (String)localJSONObject1.get("FunctionName");
+      Map localMap;
+      JSONArray localJSONArray;
+      Iterator localIterator;
+      String str3;
+      int i2;
+      switch (str1)
+      {
+      case "closeGripper": 
+        localMap = Collections.synchronizedMap(new HashMap());
+        localJSONArray = (JSONArray)localJSONObject1.get("Parameter_For_Function_0");
+        localIterator = localJSONArray.iterator();
+        while (localIterator.hasNext())
+        {
+          JSONObject localJSONObject3 = (JSONObject)localIterator.next();
+          long l1 = ((Long)localJSONObject3.get("position")).longValue();
+          if (l1 < 0L) {
+            break;
+          }
+          str3 = (String)localJSONObject3.get("type");
+          i2 = (int)((Long)localJSONObject3.get("value")).longValue();
+          switch (str3)
+          {
+          case "int": 
+            localMap.put(Long.valueOf(l1), Integer.valueOf(i2));
+            break;
+          default: 
+            System.out.println("Type not supported ");
+            System.exit(-1);
+          }
+        }
+        int j = ((Integer)localMap.get(Long.valueOf(0L))).intValue();
+        try
+        {
+          paramSkeletonClientRequest.socket.close();
+          int n = this.skel.getImpl().closeGripper(j);
+        }
+        catch (Exception localException2)
+        {
+          localException2.printStackTrace();
+        }
+        break;
+      case "openGripper": 
+        localMap = Collections.synchronizedMap(new HashMap());
+        localJSONArray = (JSONArray)localJSONObject1.get("Parameter_For_Function_1");
+        localIterator = localJSONArray.iterator();
+        while (localIterator.hasNext())
+        {
+          JSONObject localJSONObject4 = (JSONObject)localIterator.next();
+          long l2 = ((Long)localJSONObject4.get("position")).longValue();
+          if (l2 < 0L) {
+            break;
+          }
+          str3 = (String)localJSONObject4.get("type");
+          i2 = (int)((Long)localJSONObject4.get("value")).longValue();
+          switch (str3)
+          {
+          case "int": 
+            localMap.put(Long.valueOf(l2), Integer.valueOf(i2));
+            break;
+          default: 
+            System.out.println("Type not supported ");
+            System.exit(-1);
+          }
+        }
+        int k = ((Integer)localMap.get(Long.valueOf(0L))).intValue();
+        try
+        {
+          paramSkeletonClientRequest.socket.close();
+          int i1 = this.skel.getImpl().openGripper(k);
+        }
+        catch (Exception localException3)
+        {
+          localException3.printStackTrace();
+        }
+        break;
+      case "isGripperClosed": 
+        localMap = Collections.synchronizedMap(new HashMap());
+        localJSONArray = (JSONArray)localJSONObject1.get("Parameter_For_Function_2");
+        localIterator = localJSONArray.iterator();
+        while (localIterator.hasNext())
+        {
+          JSONObject localJSONObject5 = (JSONObject)localIterator.next();
+          long l3 = ((Long)localJSONObject5.get("position")).longValue();
+          if (l3 < 0L) {
+            break;
+          }
+          str3 = (String)localJSONObject5.get("type");
+          i2 = (int)((Long)localJSONObject5.get("value")).longValue();
+          switch (str3)
+          {
+          case "int": 
+            localMap.put(Long.valueOf(l3), Integer.valueOf(i2));
+            break;
+          default: 
+            System.out.println("Type not supported ");
+            System.exit(-1);
+          }
+        }
+        try
+        {
+          int m = this.skel.getImpl().isGripperClosed();
+          localJSONObject2.put("ReturnValue", "" + m);
+          sendAnswer(paramSkeletonClientRequest.socket, localJSONObject2);
+        }
+        catch (Exception localException1)
+        {
+          localException1.printStackTrace();
+        }
+        break;
+      default: 
+        System.err.println("[ERROR] Function not supported ");
+        System.exit(-1);
+      }
+      return localJSONObject2;
+    }
+  }
+}*/
+
+
+/* Location:              /Users/marvin/Downloads/CaDSBase.jar!/org/cads/ev3/rmi/generated/cadSRMISkeleton/IDLCaDSEV3RMIMoveGripperSkeleton.class
+ * Java compiler version: 7 (51.0)
+ * JD-Core Version:       0.7.1
+ */

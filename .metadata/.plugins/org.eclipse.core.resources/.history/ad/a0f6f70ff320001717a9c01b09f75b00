@@ -1,0 +1,21 @@
+import org.json.simple.JSONObject;
+
+
+public class MoveGripperSkeleton {
+	 private void doRunService()
+	    {
+
+	          String str = (String)localSkeletonClientRequest.json.get("ObjectName");
+	          if (!str.equals("IDLCaDSEV3RMIMoveGripper"))
+	          {
+	            localJSONObject = new JSONObject();
+	            localJSONObject.put("Type", "Response");
+	            localJSONObject.put("State", "NOK");
+	            localJSONObject.put("Exception", "CaDSRMIClassNotFoundException");
+	          }
+	          else
+	          {
+	            localJSONObject = switchFunktions(localSkeletonClientRequest);
+	          }
+	        }
+	      }

@@ -1,0 +1,95 @@
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+public class MoveGripperSkeleton {
+
+	public void handle(String methodName){
+		
+		
+  	  JSONObject localJSONObject2 = new JSONObject();
+  	  localJSONObject2.put("Type", "Response");
+		
+	Map localMap;
+	  JSONArray localJSONArray;
+	  Iterator localIterator;
+	  String str3;
+	  int i2;
+	  
+	  switch (methodName)
+	  {
+	  case "closeGripper": 
+	    localMap = Collections.synchronizedMap(new HashMap());
+	    localJSONArray = (JSONArray)localJSONObject1.get("Parameter");
+	    localIterator = localJSONArray.iterator();
+	    
+	    while (localIterator.hasNext())
+	    {
+	      JSONObject localJSONObject3 = (JSONObject)localIterator.next();
+	      long l1 = ((Long)localJSONObject3.get("position")).longValue();
+	      if (l1 < 0L) {
+	        break;
+	      }
+	      str3 = (String)localJSONObject3.get("type");
+	      i2 = (int)((Long)localJSONObject3.get("value")).longValue();
+	      switch (str3)
+	      {
+	      case "int": 
+	        localMap.put(Long.valueOf(l1), Integer.valueOf(i2));
+	        break;
+	      default: 
+	        System.out.println("Type not supported ");
+	        //todo break
+	      }
+	    }
+	    
+	    
+	    int j = ((Integer)localMap.get(Long.valueOf(0L))).intValue();
+	    try
+	    {
+	      paramSkeletonClientRequest.socket.close();
+	      int n = this.skel.getImpl().closeGripper(j);
+	    }
+	    catch (Exception localException2)
+	    {
+	      localException2.printStackTrace();
+	    }
+	    break;
+	  case "openGripper": 
+		    localMap = Collections.synchronizedMap(new HashMap());
+		    int k = ((Integer)localMap.get(Long.valueOf(0L))).intValue();
+		    try
+		    {
+		      int i1 = this.skel.getImpl().openGripper(k);
+		    }
+		    catch (Exception localException3)
+		    {
+		      localException3.printStackTrace();
+		    }
+	    break;
+	  case "isGripperClosed": 
+	    try
+	    {
+	      int m = this.skel.getImpl().isGripperClosed();
+	      localJSONObject2.put("ReturnValue", "" + m);
+	      sendAnswer(paramSkeletonClientRequest.socket, localJSONObject2);
+	    }
+	    catch (Exception localException1)
+	    {
+	      localException1.printStackTrace();
+	    }
+	    break;
+	  default: 
+	    System.err.println("[ERROR] Function not supported ");
+	    System.exit(-1);
+	  }
+	  return localJSONObject2;
+	}
+	}
+	
+	
+}

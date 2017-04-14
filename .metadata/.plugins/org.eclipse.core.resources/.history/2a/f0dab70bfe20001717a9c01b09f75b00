@@ -1,0 +1,73 @@
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+
+import org.cads.ev3.middleware.CaDSEV3RobotStudentImplementation;
+import org.cads.ev3.middleware.CaDSEV3RobotType;
+
+import Implementation.RobotImplementationMoveGripper;
+
+public class Revciever {
+	private static DatagramSocket dsocket;
+
+	public static void main(String args[]) {
+		RobotStatusManager manager = new RobotStatusManager();
+		CaDSEV3RobotStudentImplementation robot =CaDSEV3RobotStudentImplementation.createInstance(CaDSEV3RobotType.SIMULATION, manager, manager);
+		//ServiceFactory Factory = new ServiceFactory(robot);
+		RobotImplementationMoveGripper gripper = new RobotImplementationMoveGripper(robot);
+		
+		
+		
+		try {
+			int port = 9090;
+
+			dsocket = new DatagramSocket(port);
+
+			// Create a buffer to read datagrams into. If a
+			// packet is larger than this buffer, the
+			// excess will simply be discarded!
+			byte[] buffer = new byte[2048];
+
+			// Create a packet to receive data into the buffer
+			DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+
+			// Now loop forever, waiting to receive packets and printing them.
+			while (true) {
+				// Wait to receive a datagram
+				dsocket.receive(packet);
+				System.out.println("New Packet:");
+				// Convert the contents to a string, and display them
+				String msg = new String(buffer, 0, packet.getLength());
+				
+				
+				try (InputStream is = new ByteArrayInputStream(buffer, 0, packet.getLength());
+					 JsonReader rdr = Json.createReader(is)
+				) {
+						 
+						      JsonObject obj = rdr.readObject();
+						      System.out.println(obj.getString("FunctionName"));
+						      /*JsonArray results = obj.getJsonArray("data");
+						      for (JsonObject result : results.getValuesAs(JsonObject.class)) {
+						          System.out.print(result.getJsonObject("from").getString("name"));
+						          System.out.print(": ");
+						        System.out.println(result.getString("message", ""));
+						         System.out.println("-----------");
+					     }*/
+				}catch(Exception e){
+					
+				}
+
+				// Reset the length of the packet before reusing it.
+				packet.setLength(buffer.length);
+			}
+		} catch (Exception e) {
+			System.err.println(e);
+		}
+	}
+}

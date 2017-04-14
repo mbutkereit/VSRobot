@@ -1,0 +1,4 @@
+
+public class RobotStatusManager implements ICaDSEV3RobotStatusListener,ICaDSEV3RobotFeedBackListener {
+
+}

@@ -1,0 +1,13 @@
+package org.cads.ev3.rmi.generated.cadSRMIInterface;
+
+public abstract interface IIDLCaDSEV3RMIUltraSonic
+{
+  public abstract int isUltraSonicOccupied()
+    throws Exception;
+}
+
+
+/* Location:              /Users/marvin/Downloads/CaDSBase.jar!/org/cads/ev3/rmi/generated/cadSRMIInterface/IIDLCaDSEV3RMIUltraSonic.class
+ * Java compiler version: 7 (51.0)
+ * JD-Core Version:       0.7.1
+ */

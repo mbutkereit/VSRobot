@@ -1,0 +1,44 @@
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+
+
+public class ParameterParser {
+	public Map<Long,Integer> parse(JsonObject json) throws Exception {
+
+		Map<Long,Integer> localMap;
+		JsonArray localJSONArray;
+		Iterator localIterator;
+		String str3;
+		int i2;
+
+		localMap = new HashMap<Long,Integer>();
+		Object test = json.getJsonArray("Parameter");
+		localIterator = localJSONArray.iterator();
+
+		while (localIterator.hasNext()) {
+			/*JsonObject currentObject = (JsonObject) localIterator.next();
+			long l1 = ((Long) currentObject.get("position")).longValue();
+			if (l1 < 0L) {
+				break;
+			}
+			str3 = (String) currentObject.get("type");
+			i2 = (int) ((Long) currentObject.get("value")).longValue();
+			switch (str3) {
+			case "int":
+				localMap.put(Long.valueOf(l1), Integer.valueOf(i2));
+				break;
+			default:
+				System.out.println("Type not supported ");
+				throw new Exception("Not Supported Parameter found");
+			}*/
+		}
+		
+		return localMap;
+
+	}
+}
