@@ -27,9 +27,10 @@ public class MoveGripperSkeleton {
 			JsonObject obj = rdr.readObject();
 
 			String className = obj.getString("ObjectName");
+			
 			String methodName = obj.getString("FunctionName");
 
-			if (!className.equals(MoveGripperSkeleton.ServiceClass)) {
+			if (!(className.equals(MoveGripperSkeleton.ServiceClass))) {
 				throw new Exception("Class not found.");
 			} else {
 				
@@ -47,6 +48,7 @@ public class MoveGripperSkeleton {
 
 					break;
 				case "openGripper":
+					
 					param1 = ((Integer) parameterList.get(Long.valueOf(0L)))
 							.intValue();
 					result = this.getImplementation().openGripper(param1);

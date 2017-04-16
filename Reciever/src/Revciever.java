@@ -7,13 +7,15 @@ public class Revciever {
 	private static DatagramSocket dsocket;
 
 	public static void main(String args[]) {
+		
 		MoveGripperSkeleton skeleton = new MoveGripperSkeleton();
+		
 		try {
+
 			int port = 9090;
 			dsocket = new DatagramSocket(port);
 			byte[] buffer = new byte[2048];
 			DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
-
 			while (true) {
 				dsocket.receive(packet);
 				
