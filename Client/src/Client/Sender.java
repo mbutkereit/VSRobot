@@ -1,12 +1,9 @@
 package Client;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
@@ -84,8 +81,6 @@ public class Sender extends Thread {
 
 		while (!isInterrupted()) {
 			JsonObject object = queue.pull();
-
-
 
 			// get the byte array of the object
 			byte[] data = object.toString().getBytes();

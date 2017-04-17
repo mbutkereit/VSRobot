@@ -8,20 +8,26 @@ import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
-public class GripperStub {
+/**
+ * Die Klasse ist verantwortlich für das Marshalling.
+ * 
+ * @author wilhelm
+ *
+ */
+public class MoveGripperStub implements IGripperStub {
 
 	/**
-	 * enhält die JsonObjekte
+	 * Eine Queue für die JsonDokumente.
 	 */
-	private FifoQueue queue = null;
+	private FifoQueue fifo = null;
 
 	/**
 	 * Konstruktor
 	 * 
-	 * @param queue
+	 * @param fifo
 	 */
-	public GripperStub(FifoQueue queue) {
-		this.queue = queue;
+	public MoveGripperStub(FifoQueue fifo) {
+		this.fifo = fifo;
 	}
 
 	/**
@@ -29,17 +35,19 @@ public class GripperStub {
 	 * dieses in die Queue.
 	 * 
 	 * @param methode
-	 * @return
+	 *            Die Methode die in einem anderen Prozess aufgerufen werden
+	 *            soll
 	 */
-	public void handle(Method methode, int value) {
+	@Override
+	public void handle(Method method, int parameter) {
 		// Methodenname
 		JsonBuilderFactory factory = Json.createBuilderFactory(null);
 		JsonObjectBuilder builder = factory.createObjectBuilder()
-				.add("FunctionName", methode.getName()).add("Type", "Request");
+				.add("FunctionName", method.getName()).add("Type", "Request");
 
 		// Parameter
 
-		Parameter[] param = methode.getParameters();
+		Parameter[] param = method.getParameters();
 
 		JsonObject object = builder
 				.add("Parameter",
@@ -48,10 +56,13 @@ public class GripperStub {
 										.add("position", 0)
 										.add("type",
 												param[0].getType().getName())
-										.add("value", value)))
+										.add("value", parameter)))
 				.add("ObjectName", "IDLCaDSEV3RMIMoveGripper").build();
 
-		System.out.println("Objekt in die Queue gelegt: \n"+ object.toString());
-		queue.push(object);
+		System.out
+				.println("Objekt in die Queue gelegt: \n" + object.toString());
+
+		fifo.push(object);
 	}
+
 }

@@ -5,7 +5,7 @@ import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
 
 /**
- * Nicht in benutzung
+ * Nicht in Benutzung
  * @author wilhelm
  *
  */
@@ -28,10 +28,11 @@ public class JsonParser {
 				.add("ObjectName", "IDLCaDSEV§RMIMoveGripper").build();
 	}
 
+	//Nur zum Testen
 	public static void main(String[] arsg) {
 		JsonParser parser = new JsonParser();
 		
-		Controller ck = new Controller();
+		Controller ck = new Controller(new FifoQueue());
 		
 		System.out.println(ck.getClass().getName());
 
