@@ -1,4 +1,4 @@
-package Client;
+package client;
 
 /**
  * Die Klasse ist eine Factory für Stubs.

@@ -1,4 +1,4 @@
-package Client;
+package client;
 
 import javax.json.Json;
 import javax.json.JsonBuilderFactory;

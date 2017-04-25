@@ -1,10 +1,11 @@
-package Client;
+package client;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import javax.json.JsonObject;
@@ -78,6 +79,7 @@ public class Sender extends Thread {
 		init();
 		createSocket();
 		DatagramPacket packet = null;
+		boolean answerRecieved = false;
 
 		while (!isInterrupted()) {
 			JsonObject object = queue.pull();
@@ -88,10 +90,29 @@ public class Sender extends Thread {
 			try {
 				socket.send(packet);
 				System.out.println("Paket gesendet");
+				socket.setSoTimeout(2000);
+
+				answerRecieved = false;
+				while (!(answerRecieved)) {
+					try {
+						socket.receive(packet);
+						answerRecieved = true;
+					} catch (SocketTimeoutException e) {
+						System.err
+								.println("Timeout: Versuche die Nachricht noch einmal zu übertragen");
+						socket.send(packet);
+						System.out.println("Paket erneut gesendet");
+					}
+				}
+
+			} catch (SocketException e) {
+				System.err.println("Socket has been closed .");
+				e.printStackTrace();
 			} catch (IOException e) {
 				System.err.println("An I/O Error is occured.");
 				e.printStackTrace();
 			}
+
 		}
 		socket.close();
 	}
