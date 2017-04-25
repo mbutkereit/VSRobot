@@ -30,7 +30,7 @@ public class Controller implements IIDLCaDSEV3RMIMoveGripper,
 	/**
 	 * Der Gripperstub ist verantwortlich für das Mahrshalling.
 	 */
-	private IIDLCaDSEV3RMIMoveGripper gripperstub = null;
+	private IMoveGripperStub gripperstub = null;
 
 	/**
 	 * Konstruktor

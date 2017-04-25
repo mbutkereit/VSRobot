@@ -21,7 +21,7 @@ public class StubFactory {
 	 * Holt den richtigen GripperStub
 	 * 
 	 * @param methode
-	 * @return
+	 * @return MoveGripperStub
 	 */
 	public MoveGripperStub getGripperStub() {
 		return new MoveGripperStub(fifo);

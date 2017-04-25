@@ -13,7 +13,7 @@ import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveGripper;
  * @author wilhelm
  *
  */
-public class MoveGripperStub implements IIDLCaDSEV3RMIMoveGripper {
+public class MoveGripperStub implements IMoveGripperStub {
 
 	/**
 	 * Eine Queue für die JsonDokumente.
@@ -57,20 +57,20 @@ public class MoveGripperStub implements IIDLCaDSEV3RMIMoveGripper {
 	}
 
 	@Override
-	public int closeGripper(int parameter) throws Exception {
+	public int closeGripper(int parameter) {
 		JsonObject object = buildMessage("closeGripper", parameter);
 		fifo.push(object);
 		return 0;
 	}
 
 	@Override
-	public int isGripperClosed() throws Exception {
+	public int isGripperClosed() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int openGripper(int parameter) throws Exception {
+	public int openGripper(int parameter) {
 		JsonObject object = buildMessage("openGripper", parameter);
 		fifo.push(object);
 		return 0;
