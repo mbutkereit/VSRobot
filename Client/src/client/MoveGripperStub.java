@@ -8,7 +8,7 @@ import javax.json.JsonObjectBuilder;
 import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveGripper;
 
 /**
- * Die Klasse ist verantwortlich für das Marshalling.
+ * Die Klasse ist verantwortlich fï¿½r das Marshalling.
  * 
  * @author wilhelm
  *
@@ -16,7 +16,7 @@ import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveGripper;
 public class MoveGripperStub implements IMoveGripperStub {
 
 	/**
-	 * Eine Queue für die JsonDokumente.
+	 * Eine Queue fï¿½r die JsonDokumente.
 	 */
 	private FifoQueue fifo = null;
 

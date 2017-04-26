@@ -19,7 +19,7 @@ import javax.json.JsonObject;
 public class Sender extends Thread {
 
 	/**
-	 * Portnummer für die Verbindung zum Server
+	 * Portnummer fï¿½r die Verbindung zum Server
 	 */
 	public static final int PORTNUMMER = 9090;
 
@@ -29,7 +29,7 @@ public class Sender extends Thread {
 	public static final String IP_ADRESSE = "127.0.0.1";
 
 	/**
-	 * enhält die JsonObjekte
+	 * enhï¿½lt die JsonObjekte
 	 */
 	private FifoQueue queue = null;
 
@@ -99,7 +99,7 @@ public class Sender extends Thread {
 						answerRecieved = true;
 					} catch (SocketTimeoutException e) {
 						System.err
-								.println("Timeout: Versuche die Nachricht noch einmal zu übertragen");
+								.println("Timeout: Versuche die Nachricht noch einmal zu ï¿½bertragen");
 						socket.send(packet);
 						System.out.println("Paket erneut gesendet");
 					}

@@ -1,7 +1,7 @@
 package client;
 
 /**
- * Die Klasse ist eine Factory für Stubs.
+ * Die Klasse ist eine Factory fï¿½r Stubs.
  * 
  * @author wilhelm
  *
@@ -9,7 +9,7 @@ package client;
 public class StubFactory {
 
 	/**
-	 * Queue für die Stubs.
+	 * Queue fï¿½r die Stubs.
 	 */
 	private FifoQueue fifo = null;
 

@@ -9,7 +9,7 @@ import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveVertical;
 import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIUltraSonic;
 
 /**
- * Die Klasse wird von der Gui benachrichtigt, wenn sich etwas verändert.
+ * Die Klasse wird von der Gui benachrichtigt, wenn sich etwas verï¿½ndert.
  * 
  * @author wilhelm
  *
@@ -28,7 +28,7 @@ public class Controller implements IIDLCaDSEV3RMIMoveGripper,
 	private StubFactory factory = null;
 
 	/**
-	 * Der Gripperstub ist verantwortlich für das Mahrshalling.
+	 * Der Gripperstub ist verantwortlich fï¿½r das Mahrshalling.
 	 */
 	private IMoveGripperStub gripperstub = null;
 
@@ -108,7 +108,7 @@ public class Controller implements IIDLCaDSEV3RMIMoveGripper,
 	 * Initialisierung
 	 * 
 	 * @param fifo
-	 *            eine Queue für die JsonDokumente
+	 *            eine Queue fï¿½r die JsonDokumente
 	 */
 	private void init(FifoQueue fifo) {
 		factory = new StubFactory(fifo);

@@ -25,7 +25,7 @@ public class JsonParser {
 										.add("value", 0)).add(factory.createObjectBuilder()
 										.add("position", 0).add("type", "int")
 										.add("value", 0)))
-				.add("ObjectName", "IDLCaDSEV§RMIMoveGripper").build();
+				.add("ObjectName", "IDLCaDSEVï¿½RMIMoveGripper").build();
 	}
 
 	//Nur zum Testen

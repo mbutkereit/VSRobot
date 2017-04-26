@@ -1,9 +1,9 @@
-package Client;
+package client;
 
 import java.lang.reflect.Method;
 
 /**
- * Interface für einen GripperStub
+ * Interface fï¿½r einen GripperStub
  * 
  * @author wilhelm
  *

@@ -6,7 +6,7 @@ import java.util.Queue;
 import javax.json.JsonObject;
 
 /**
- * Wrapper für eine Queue von JsonObjekten.
+ * Wrapper fï¿½r eine Queue von JsonObjekten.
  * @author wilhelm
  *
  */
@@ -25,15 +25,15 @@ public class FifoQueue {
 	}
 	
 	/**
-	 * Fügt ein Element der Queue hinzu.
+	 * Fï¿½gt ein Element der Queue hinzu.
 	 */
 	public synchronized void push(JsonObject objekt){
 		queue.add(objekt);
 	}
 	
 	/**
-	 * Nimmt das zuersthinzugefügte Element aus der Queue.
-	 * @return das zuersthinzugefügte Element
+	 * Nimmt das zuersthinzugefï¿½gte Element aus der Queue.
+	 * @return das zuersthinzugefï¿½gte Element
 	 */
 	public synchronized JsonObject pull(){
 		while(isEmpty()){

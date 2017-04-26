@@ -3,7 +3,7 @@ package client;
 public interface IMoveGripperStub {
 
 	/**
-	 * Öffnet den Gripper
+	 * ï¿½ffnet den Gripper
 	 * 
 	 * @param id
 	 * @return
@@ -11,7 +11,7 @@ public interface IMoveGripperStub {
 	public int openGripper(int id);
 
 	/**
-	 * Schließt den Gripper
+	 * Schlieï¿½t den Gripper
 	 * 
 	 * @param id
 	 * @return
@@ -19,7 +19,7 @@ public interface IMoveGripperStub {
 	public int closeGripper(int id);
 
 	/**
-	 * Prüft ob der Gripper geschlossen ist.
+	 * Prï¿½ft ob der Gripper geschlossen ist.
 	 * 
 	 * @return
 	 */
