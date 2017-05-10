@@ -1,12 +1,14 @@
 package client;
 
-import org.cads.ev3.gui.ICaDSRobotGUIUpdater;
-import org.cads.ev3.gui.swing.CaDSRobotGUISwing;
-import org.cads.ev3.rmi.consumer.ICaDSRMIConsumer;
-import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveGripper;
-import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveHorizontal;
-import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveVertical;
-import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIUltraSonic;
+
+
+import dienste.IIDLCaDSEV3RMIMoveGripper;
+import dienste.IIDLCaDSEV3RMIMoveHorizontal;
+import dienste.IIDLCaDSEV3RMIMoveVertical;
+import dienste.IIDLCaDSEV3RMIUltraSonic;
+import gui.CaDSRobotGUISwing;
+import gui.ICaDSRobotGUIUpdater;
+
 
 /**
  * Die Klasse wird von der Gui benachrichtigt, wenn sich etwas ver�ndert.
@@ -30,7 +32,42 @@ public class Controller implements IIDLCaDSEV3RMIMoveGripper,
 	/**
 	 * Der Gripperstub ist verantwortlich f�r das Mahrshalling.
 	 */
-	private IMoveGripperStub gripperstub = null;
+	private InterfaceIDLCaDSEV3RMIMoveGripper gripperstub = null;
+	
+	/**
+	 * Stub für die vertikale Bewegung.
+	 */
+	private InterfaceIIDLCaDSEV3RMIMoveVertical verticalstub = null;
+	
+	/**
+	 * Stub für die horizontale Bewegung.
+	 */
+	private InterfaceIIDLCaDSEV3RMIMoveHorizontal horizontalstub = null;
+	
+	/**
+	 * Stub für den Ultraschall.
+	 */
+	private InterfaceIIDLCaDSEV3RMIUltraSonic ultrasonicstub = null;
+	
+	/**
+	 * 
+	 */
+	private int horizontalPercent = 50;
+	
+	/**
+	 * 
+	 */
+	private int verticalPercent = 50;
+	
+	/**
+	 * 
+	 */
+	private int gripperstate = 0;
+	
+	/**
+	 * 
+	 */
+	private int ultrasonicState = 0;
 
 	/**
 	 * Konstruktor
@@ -52,44 +89,44 @@ public class Controller implements IIDLCaDSEV3RMIMoveGripper,
 
 	@Override
 	public int isUltraSonicOccupied() throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		ultrasonicstub.isUltraSonicOccupied();
+		return ultrasonicState;
 	}
 
 	@Override
 	public int getCurrentVerticalPercent() throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		verticalstub.getCurrentVerticalPercent();
+		return verticalPercent;
 	}
 
 	@Override
 	public int moveVerticalToPercent(int arg0, int arg1) throws Exception {
-		// TODO Auto-generated method stub
+		verticalstub.moveVerticalToPercent(arg0, arg1);
 		return 0;
 	}
 
 	@Override
 	public int getCurrentHorizontalPercent() throws Exception {
-		System.out.println("Diese Methode wird wirklich acu benutzt!");
-		return 0;
+		horizontalstub.getCurrentHorizontalPercent();
+		return horizontalPercent;
 	}
 
 	@Override
 	public int moveHorizontalToPercent(int arg0, int arg1) throws Exception {
-		// TODO Auto-generated method stub
+		horizontalstub.moveHorizontalToPercent(arg0, arg1);
 		return 0;
 	}
 
 	@Override
 	public int stop(int arg0) throws Exception {
-		// TODO Auto-generated method stub
+		verticalstub.stop(arg0);
+		horizontalstub.stop(arg0);
 		return 0;
 	}
 
 	@Override
 	public int isGripperClosed() throws Exception {
-		System.out.println("Diese Methode wird nie von der Gui aufgerufen!");
-		return 0;
+		return gripperstate;
 	}
 
 	@Override
@@ -113,13 +150,17 @@ public class Controller implements IIDLCaDSEV3RMIMoveGripper,
 	private void init(FifoQueue fifo) {
 		factory = new StubFactory(fifo);
 		gripperstub = factory.getGripperStub();
+		verticalstub = factory.getVerticalStub();
+		horizontalstub = factory.getHorizontalStub();
+		ultrasonicstub = factory.getUltraSonicStub();
 		// Gui
 		gui = new CaDSRobotGUISwing(this, this, this, this, this);
 		gui.setGripperClosed();
-		gui.setVerticalProgressbar(50);
-		gui.setHorizontalProgressbar(50);
+		gui.setVerticalProgressbar(20);
+		gui.setHorizontalProgressbar(20);
 		gui.addService("TestService1");
 		gui.addService("TestService2");
+		gui.startGUIRefresh(5000);
 	}
 
 	/**
@@ -140,7 +181,6 @@ public class Controller implements IIDLCaDSEV3RMIMoveGripper,
 		// Reciever
 		Reciever reciever = new Reciever();
 		reciever.start();
-
 		try {
 			sender.join();
 			reciever.join();
@@ -150,5 +190,4 @@ public class Controller implements IIDLCaDSEV3RMIMoveGripper,
 		}
 
 	}
-
 }

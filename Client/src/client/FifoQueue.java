@@ -27,7 +27,7 @@ public class FifoQueue {
 	/**
 	 * F�gt ein Element der Queue hinzu.
 	 */
-	public synchronized void push(JsonObject objekt){
+	public synchronized void enque(JsonObject objekt){
 		queue.add(objekt);
 	}
 	
@@ -35,7 +35,7 @@ public class FifoQueue {
 	 * Nimmt das zuersthinzugef�gte Element aus der Queue.
 	 * @return das zuersthinzugef�gte Element
 	 */
-	public synchronized JsonObject pull(){
+	public synchronized JsonObject deque(){
 		while(isEmpty()){
 			try {
 				this.wait(500);

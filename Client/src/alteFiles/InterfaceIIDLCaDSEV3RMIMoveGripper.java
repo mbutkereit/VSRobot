@@ -1,6 +1,6 @@
-package client;
+package alteFiles;
 
-public interface IMoveGripperStub {
+public interface InterfaceIIDLCaDSEV3RMIMoveGripper {
 
 	/**
 	 * �ffnet den Gripper

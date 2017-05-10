@@ -23,7 +23,37 @@ public class StubFactory {
 	 * @param methode
 	 * @return MoveGripperStub
 	 */
-	public MoveGripperStub getGripperStub() {
-		return new MoveGripperStub(fifo);
+	public InterfaceIDLCaDSEV3RMIMoveGripper getGripperStub() {
+		return new IDLCaDSEV3RMIMoveGripperStub(fifo);
+	}
+	
+	/**
+	 * Holt den richtigen VerticalStub
+	 * 
+	 * @param methode
+	 * @return MoveGripperStub
+	 */
+	public IIDLCaDSEV3RMIMoveVerticalStub getVerticalStub() {
+		return new IIDLCaDSEV3RMIMoveVerticalStub(fifo);
+	}
+	
+	/**
+	 * Holt den richtigen VerticalStub
+	 * 
+	 * @param methode
+	 * @return MoveGripperStub
+	 */
+	public IIDLCaDSEV3RMIMoveHorizontalStub getHorizontalStub() {
+		return new IIDLCaDSEV3RMIMoveHorizontalStub(fifo);
+	}
+	
+	/**
+	 * Holt den richtigen UltraSonicStub
+	 * 
+	 * @param methode
+	 * @return MoveGripperStub
+	 */
+	public InterfaceIIDLCaDSEV3RMIUltraSonic getUltraSonicStub() {
+		return new IIDLCaDSEV3RMIUltraSonicStub(fifo);
 	}
 }
