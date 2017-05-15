@@ -1,0 +1,37 @@
+{
+	"ObjectName": "IIDLCaDSEV3RMIMoveVertical",
+	"Functions": [
+		{
+			"Function_Name": "moveVerticalToPercent",
+			"Returntype": "int",
+			"Parameter": [
+				{
+					"position": 1,
+					"type": "int",
+					"name": "paramInt1"
+				},
+				{
+					"position": 2,
+					"type": "int",
+					"name": "paramInt2"
+				}
+			]
+		},
+		{
+			"Function_Name": "stop",
+			"Returntype": "int",
+			"Parameter": [
+				{
+					"position": 1,
+					"type": "int",
+					"name": "paramInt"
+				}
+			]
+		},
+		{
+			"Function_Name": "getCurrentVerticalPercent",
+			"Returntype": "int",
+			"Parameter": []
+		}
+	]
+}

@@ -1,0 +1,12 @@
+package implementation;
+
+/**
+ * Die Klasse ist verantwortlich für die Implementierung.
+ * 
+ * @author wilhelm
+ *
+ */
+public class %s implements %s {
+
+%s
+}

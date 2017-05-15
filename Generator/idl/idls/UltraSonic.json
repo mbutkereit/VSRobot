@@ -1,0 +1,10 @@
+{
+	"ObjectName": "IIDLCaDSEV3RMIUltraSonic",
+	"Functions": [
+		{
+			"Function_Name": "isUltraSonicOccupied",
+			"Returntype": "int",
+			"Parameter": []
+		}
+	]
+}

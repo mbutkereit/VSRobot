@@ -1,0 +1,32 @@
+{
+	"ObjectName": "IDLCaDSEV3RMIMoveGripper",
+	"Functions": [
+		{
+			"Function_Name": "openGripper",
+			"Returntype":"int",
+			"Parameter": [
+				{
+					"position": 1,
+					"type": "int",
+					"name": "Transaction_ID"
+				}
+			]
+		},
+		{
+			"Function_Name": "closeGripper",
+			"Returntype":"int",
+			"Parameter": [
+				{
+					"position": 1,
+					"type": "int",
+					"name": "Transaction_ID"
+				}
+			]
+		},
+		{
+			"Function_Name": "isGripperClosed",
+			"Returntype":"int",
+			"Parameter": []
+		}
+	]
+}

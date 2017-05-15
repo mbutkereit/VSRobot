@@ -1,7 +1,6 @@
-package Implementation;
+package implementation;
 
 import org.cads.ev3.middleware.CaDSEV3RobotStudentImplementation;
-import org.cads.ev3.middleware.CaDSEV3RobotType;
 import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveGripper;
 
 public class RobotImplementationMoveGripper implements
@@ -17,6 +16,7 @@ public class RobotImplementationMoveGripper implements
 	@Override
 	public int closeGripper(int arg0) throws Exception {
 		this.call.doClose();
+		this.call.moveUp();
 		RobotImplementationMoveGripper.gripperClosed = true;
 		return 0;
 	}
