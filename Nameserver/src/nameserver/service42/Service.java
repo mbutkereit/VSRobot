@@ -2,12 +2,19 @@ package nameserver.service42;
 
 import java.io.IOException;
 
-import fi.iki.elonen.NanoWSD;
+//import fi.iki.elonen.NanoWSD;
+import provider.Forwarder;
+import provider.Receiver;
 
 public class Service {
 
-    public static void main(String[] args) throws IOException {
-    	UserList list = new UserList();
+    public static void main(String[] args) throws IOException, InterruptedException {
+    	
+		Thread forwarderProviderThread = new Thread(new Receiver(new Forwarder(),9090));
+		forwarderProviderThread.start();
+		forwarderProviderThread.join();
+    	
+    /*	UserList list = new UserList();
         NanoWSD ws = new DebugWebSocketServer( 9090, list );
         ws.start();
         LebensChecker a = new LebensChecker(list);
@@ -19,7 +26,7 @@ public class Service {
         } catch (IOException ignored) {
         }
         ws.stop();
-        System.out.println("Server stopped.\n");
+        System.out.println("Server stopped.\n");*/
     }
 
     
