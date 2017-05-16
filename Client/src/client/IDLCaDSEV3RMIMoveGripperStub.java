@@ -57,12 +57,12 @@ public class IDLCaDSEV3RMIMoveGripperStub implements InterfaceIDLCaDSEV3RMIMoveG
     
 		builder.add("FunctionName", "openGripper").add("Type", "Request");
 		JsonArrayBuilder abuilder = Json.createArrayBuilder();
-		abuilder.add(factory.createObjectBuilder().add("position",1).add("type","int").add("value",Transaction_ID));
+		abuilder.add(factory.createObjectBuilder().add("position",1).add("type","int").add("value", Transaction_ID));
 		builder.add("Parameter", abuilder);
 		builder.add("ObjectName", stubinterface.getSimpleName());
 		JsonObject object = builder.build();
-		System.out
-				.println("Objekt in die Queue gelegt: \n" + object.toString());
+//		System.out
+//				.println("Objekt in die Queue gelegt: \n" + object.toString());
 		fifo.enque(object);
 		return 0;
     }
@@ -73,12 +73,12 @@ public class IDLCaDSEV3RMIMoveGripperStub implements InterfaceIDLCaDSEV3RMIMoveG
     
 		builder.add("FunctionName", "closeGripper").add("Type", "Request");
 		JsonArrayBuilder abuilder = Json.createArrayBuilder();
-		abuilder.add(factory.createObjectBuilder().add("position",1).add("type","int").add("value",Transaction_ID));
+		abuilder.add(factory.createObjectBuilder().add("position",1).add("type","int").add("value", Transaction_ID));
 		builder.add("Parameter", abuilder);
 		builder.add("ObjectName", stubinterface.getSimpleName());
 		JsonObject object = builder.build();
-		System.out
-				.println("Objekt in die Queue gelegt: \n" + object.toString());
+//		System.out
+//				.println("Objekt in die Queue gelegt: \n" + object.toString());
 		fifo.enque(object);
 		return 0;
     }
@@ -93,8 +93,8 @@ public class IDLCaDSEV3RMIMoveGripperStub implements InterfaceIDLCaDSEV3RMIMoveG
 		builder.add("Parameter", abuilder);
 		builder.add("ObjectName", stubinterface.getSimpleName());
 		JsonObject object = builder.build();
-		System.out
-				.println("Objekt in die Queue gelegt: \n" + object.toString());
+//		System.out
+//				.println("Objekt in die Queue gelegt: \n" + object.toString());
 		fifo.enque(object);
 		return 0;
     }

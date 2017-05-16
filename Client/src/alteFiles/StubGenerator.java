@@ -1,4 +1,4 @@
-package generator;
+package alteFiles;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -156,7 +156,7 @@ public class StubGenerator {
 
 	private static String getParameterJsonBuilderString(int position, String type,
 			String name) {
-		String plaintext =	"abuilder.add(factory.createObjectBuilder().add(\"position\","+ position+").add(\"type\",\" "+type+"\").add(\"value\",\" "+name+"\"));";
+		String plaintext =	"abuilder.add(factory.createObjectBuilder().add(\"position\","+ position+").add(\"type\",\""+type+"\").add(\"value\","+name+"));";
 				
 		return plaintext;
 	}

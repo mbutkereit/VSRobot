@@ -61,8 +61,8 @@ public class IIDLCaDSEV3RMIUltraSonicStub implements InterfaceIIDLCaDSEV3RMIUltr
 		builder.add("Parameter", abuilder);
 		builder.add("ObjectName", stubinterface.getSimpleName());
 		JsonObject object = builder.build();
-//		System.out
-//				.println("Objekt in die Queue gelegt: \n" + object.toString());
+		System.out
+				.println("Objekt in die Queue gelegt: \n" + object.toString());
 		fifo.enque(object);
 		return 0;
     }

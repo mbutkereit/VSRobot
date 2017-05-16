@@ -83,6 +83,8 @@ public class Sender extends Thread {
 
 		while (!isInterrupted()) {
 			JsonObject object = queue.deque();
+			
+			System.out.println("Senden:::::: "+object.toString());
 
 			// get the byte array of the object
 			byte[] data = object.toString().getBytes();
@@ -93,19 +95,19 @@ public class Sender extends Thread {
 				socket.setSoTimeout(2000);
 
 				answerRecieved = false;
-				int versuche = 0;
-				while (!(answerRecieved) && versuche <5) {
-					try {
-						socket.receive(packet);
-						answerRecieved = true;
-					} catch (SocketTimeoutException e) {
-						System.err
-								.println("Timeout: Versuche die Nachricht noch einmal zu �bertragen");
-						versuche++;
-						socket.send(packet);
-						System.out.println("Paket erneut gesendet");
-					}
-				}
+//				int versuche = 0;
+//				while (!(answerRecieved) && versuche <5) {
+//					try {
+//						socket.receive(packet);
+//						answerRecieved = true;
+//					} catch (SocketTimeoutException e) {
+//						System.err
+//								.println("Timeout: Versuche die Nachricht noch einmal zu �bertragen");
+//						versuche++;
+//						socket.send(packet);
+//						System.out.println("Paket erneut gesendet");
+//					}
+//				}
 
 			} catch (SocketException e) {
 				System.err.println("Socket has been closed .");
