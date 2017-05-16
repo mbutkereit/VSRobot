@@ -1,0 +1,64 @@
+<script>
+var exampleSocket = new WebSocket("ws://localhost:8042/", "protocolOne");
+
+exampleSocket.onopen = function(evt) {
+    exampleSocket.send("Here's some text that the server is urgently awaiting!");
+};
+
+exampleSocket.onclose = function(evt) {
+    console.log(evt);
+};
+
+exampleSocket.onmessage = function(evt) {
+    console.log(evt.data);
+    value = JSON.parse(evt.data);
+
+    if(value.hasOwnProperty("values")){
+	    var template ="<table><tr><th>Service Name</th> <th>Ip</th> <th>port</th></tr>";
+	    var x = document.getElementsByClassName("info_about_services");
+	    value.values.forEach(function(entry) {
+		    template +="<tr>";
+		    template +="<td>"+entry.name+"</td>";
+		    template +="<td>"+entry.ip+"</td>";
+                    template +="<td>"+entry.port+"</td>";
+                    template += "</tr>";
+});
+template +="</table>"
+	    x[0].innerHTML = template;
+    }
+};
+
+exampleSocket.onerror = function(evt) {
+    console.log(evt);
+};
+
+
+function sendMessage(msg) {
+        waitForSocketConnection(exampleSocket, function() {
+
+            exampleSocket.send(msg);
+        });
+    };
+
+
+function waitForSocketConnection(socket, callback){
+        setTimeout(
+            function(){
+                if (exampleSocket.readyState === 1) {
+                    if(callback !== undefined){
+                        callback();
+                    }
+                    return;
+                } else {
+                    waitForSocketConnection(exampleSocket,callback);
+                }
+            }, 5);
+    };
+sendMessage(JSON.stringify({
+  function: "getServices"
+}));
+</script>
+
+<body>
+	<div class="info_about_services"></div>
+</body>

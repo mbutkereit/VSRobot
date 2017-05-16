@@ -1,4 +1,5 @@
 package provider;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Map;
@@ -14,16 +15,15 @@ import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveGripper;
 import others.RobotMoveGripperFactory;
 import utilities.ParameterParser;
 
-
 public class MoveGripperSkeleton implements InterfaceSkeleton {
 	private final static String ServiceClass = "InterfaceIDLCaDSEV3RMIMoveGripper";
 
 	private CaDSEV3RobotStudentImplementation robot;
-	
-	public MoveGripperSkeleton(CaDSEV3RobotStudentImplementation robot){
+
+	public MoveGripperSkeleton(CaDSEV3RobotStudentImplementation robot) {
 		this.robot = robot;
 	}
-	
+
 	public JsonObject handle(byte[] buffer, int length) {
 		ParameterParser parser = new ParameterParser();
 		JsonObjectBuilder response = Json.createObjectBuilder();
@@ -35,17 +35,17 @@ public class MoveGripperSkeleton implements InterfaceSkeleton {
 			JsonObject obj = rdr.readObject();
 
 			String className = obj.getString("ObjectName");
-			
+
 			String methodName = obj.getString("FunctionName");
 
 			if (!(className.equals(MoveGripperSkeleton.ServiceClass))) {
 				throw new Exception("Class not found.");
 			} else {
-				
+
 				Map<Long, Integer> parameterList = parser.parse(obj);
 				int param1 = 0;
 				int result = 0;
-				
+
 				switch (methodName) {
 				case "closeGripper":
 					result = this.getImplementation().closeGripper(param1);
@@ -73,8 +73,9 @@ public class MoveGripperSkeleton implements InterfaceSkeleton {
 	/** todo better solution **/
 	public IIDLCaDSEV3RMIMoveGripper getImplementation() {
 		RobotMoveGripperFactory factory = new RobotMoveGripperFactory(robot);
-		IIDLCaDSEV3RMIMoveGripper gripper = factory.get(MoveGripperSkeleton.ServiceClass);
+		IIDLCaDSEV3RMIMoveGripper gripper = factory
+				.get(MoveGripperSkeleton.ServiceClass);
 		return gripper;
 	}
-	
+
 }

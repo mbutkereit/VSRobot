@@ -1,11 +1,22 @@
 package nameserver.service42;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonReader;
+
+import service.ServiceList;
 import fi.iki.elonen.NanoWSD;
 import fi.iki.elonen.NanoWSD.WebSocketFrame.CloseCode;
+import fi.iki.elonen.NanoWSD.WebSocketFrame.OpCode;
 
 public class DebugWebSocketServer extends NanoWSD {
 
@@ -50,15 +61,34 @@ public class DebugWebSocketServer extends NanoWSD {
             
         }
 
-        @Override
-        protected void onMessage(WebSocketFrame message) {
-            try {
-                message.setUnmasked();
-                sendFrame(message);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+		@Override
+		protected void onMessage(WebSocketFrame message) {
+			try {
+				message.setUnmasked();
+				// Handle Message
+
+				JsonObjectBuilder response = Json.createObjectBuilder();
+				response.add("Type", "ServiceList");
+				byte[] buffer = WebSocketFrame.text2Binary(message
+						.getTextPayload());
+				try (InputStream is = new ByteArrayInputStream(buffer, 0,
+						buffer.length); JsonReader rdr = Json.createReader(is)) {
+
+					JsonObject obj = rdr.readObject();
+					
+					
+					response.add("values", ServiceList.getInstance().createServiceJsonArray());
+				
+				} catch (Exception e) {
+
+				}
+				WebSocketFrame frame = new WebSocketFrame(OpCode.Text, true,
+						WebSocketFrame.text2Binary(response.build().toString()));
+				sendFrame(frame);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
 
         @Override
         protected void onPong(WebSocketFrame pong) {
