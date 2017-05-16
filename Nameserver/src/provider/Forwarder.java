@@ -12,10 +12,14 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 
+import service.ServiceList;
+
 public class Forwarder implements InterfaceSkeleton {
 
 	public JsonObject handle(byte[] buffer, int length) {
 
+		ServiceList list = ServiceList.getInstance();
+		
 		JsonObjectBuilder response = Json.createObjectBuilder();
 		response.add("Type", "Response");
 
@@ -23,13 +27,20 @@ public class Forwarder implements InterfaceSkeleton {
 			JsonObject obj = rdr.readObject();
 			String className = obj.getString("ObjectName");
 			String methodName = obj.getString("FunctionName");
+			
+			// Initialisieren
 			DatagramSocket dsocket = new DatagramSocket();
 			boolean answerRecieved = false;
 			DatagramPacket recieve_packet = null;
-			int port = 8080;
-			int bufferSize = 2048;
-			InetAddress ip = null;
-			byte[] data = response.toString().getBytes();
+			
+			// Laden des Services
+			int port = list.getPortFromService(className);
+			InetAddress ip = list.getIpFromService(className);
+			if(port == -1 || ip == null){
+				throw new Exception();
+			}
+			
+			byte[] data = obj.toString().getBytes();
 			DatagramPacket send_packet = new DatagramPacket(data, data.length, ip, port);
 			dsocket.send(send_packet);
 			dsocket.setSoTimeout(2000);

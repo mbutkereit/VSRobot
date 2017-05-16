@@ -26,7 +26,6 @@ public class MoveGripperSkeleton implements InterfaceSkeleton {
 	
 	public JsonObject handle(byte[] buffer, int length) {
 		ParameterParser parser = new ParameterParser();
-
 		JsonObjectBuilder response = Json.createObjectBuilder();
 		response.add("Type", "Response");
 
@@ -49,21 +48,12 @@ public class MoveGripperSkeleton implements InterfaceSkeleton {
 				
 				switch (methodName) {
 				case "closeGripper":
-
-					param1 = ((Integer) parameterList.get(Long.valueOf(0L)))
-							.intValue();
-
 					result = this.getImplementation().closeGripper(param1);
-
 					break;
 				case "openGripper":
-					
-					param1 = ((Integer) parameterList.get(Long.valueOf(0L)))
-							.intValue();
 					result = this.getImplementation().openGripper(param1);
 					break;
 				case "isGripperClosed":
-
 					result = this.getImplementation().isGripperClosed();
 					response.add("ReturnValue", "" + result);
 					break;

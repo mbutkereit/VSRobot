@@ -36,7 +36,7 @@ public class RecieverManager {
 		CaDSEV3RobotStudentImplementation robot = CaDSEV3RobotStudentImplementation
 				.createInstance(CaDSEV3RobotType.SIMULATION, manager, manager);
 		
-		Thread moveGripperProviderThread = new Thread(new Revciever(new MoveGripperSkeleton(robot),9090));
+		Thread moveGripperProviderThread = new Thread(new Revciever(new MoveGripperSkeleton(robot),3232));
 		moveGripperProviderThread.start();
 		moveGripperProviderThread.join();
 	}

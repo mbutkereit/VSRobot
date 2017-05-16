@@ -8,26 +8,25 @@ public class RobotImplementationMoveGripper implements
 
 	private CaDSEV3RobotStudentImplementation call = null;
 	private static boolean gripperClosed = false;
-	
-	public RobotImplementationMoveGripper(CaDSEV3RobotStudentImplementation roboter) {
-			this.call = roboter;
+
+	public RobotImplementationMoveGripper(
+			CaDSEV3RobotStudentImplementation roboter) {
+		this.call = roboter;
 	}
 
 	@Override
 	public int closeGripper(int arg0) throws Exception {
 		this.call.doClose();
-		this.call.moveUp();
 		RobotImplementationMoveGripper.gripperClosed = true;
 		return 0;
 	}
 
 	@Override
 	public int isGripperClosed() throws Exception {
-	    if (RobotImplementationMoveGripper.gripperClosed == false)
-	    {
-	      return 1;
-	    }
-	    return 0;
+		if (RobotImplementationMoveGripper.gripperClosed == false) {
+			return 1;
+		}
+		return 0;
 	}
 
 	@Override

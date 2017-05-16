@@ -2,7 +2,9 @@ package service;
 
 import java.net.InetAddress;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class ServiceList {
 	private Map<String, ServiceDefinition> services;
@@ -45,7 +47,21 @@ public class ServiceList {
 	}
 	
 	public String[] getAllNamespaces(){
-		return null;
+		Set<String> listOfNames = new HashSet<String>();
+		for(Map.Entry<String, ServiceDefinition> entry : services.entrySet()) {
+		    String key = entry.getKey();
+		    if(key.contains(".")){
+		    String[] serviceName = key.split("\\.");
+		    if(serviceName.length > 0){
+		    	listOfNames.add(serviceName[0]);
+		    }
+		    }
+		}
+		if(listOfNames.isEmpty()){
+			return null;
+		}
+		String[] string = listOfNames.toArray(new String[listOfNames.size()]);
+		return string;
 	}
 	
 	}

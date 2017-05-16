@@ -1,6 +1,9 @@
 package nameserver.service42;
 
+import implementation.NameserverRpcImplementation;
+
 import java.io.IOException;
+
 
 //import fi.iki.elonen.NanoWSD;
 import provider.Forwarder;
@@ -10,6 +13,8 @@ public class Service {
 
     public static void main(String[] args) throws IOException, InterruptedException {
     	
+    	 NameserverRpcImplementation imp = new NameserverRpcImplementation();
+    	 imp.registerService("InterfaceIDLCaDSEV3RMIMoveGripper", "127.0.0.1", 3232);
 		Thread forwarderProviderThread = new Thread(new Receiver(new Forwarder(),9090));
 		forwarderProviderThread.start();
 		forwarderProviderThread.join();
