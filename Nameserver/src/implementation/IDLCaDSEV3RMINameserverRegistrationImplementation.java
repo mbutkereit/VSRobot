@@ -59,22 +59,14 @@ public class IDLCaDSEV3RMINameserverRegistrationImplementation implements Interf
 	 */
 	public String lookup(String name) {
 		StringBuffer json = new StringBuffer();
-		JsonObjectBuilder response = Json.createObjectBuilder();
-		response.add("namespace", this.buildNamespaces());
-		return response.build().toString();
-	}
-
-	private JsonArrayBuilder buildNamespaces() {
-
 		ServiceList list = ServiceList.getInstance();
 		String[] namespaces = list.getAllNamespaces();
-		JsonArrayBuilder builder = Json.createArrayBuilder();
 
 		for (String name_service : namespaces) {
-			builder.add(name_service);
+			json.append(name_service+',');
 		}
-		return builder;
-
+		return json.toString();
 	}
+
 
 }

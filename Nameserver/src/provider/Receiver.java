@@ -77,7 +77,6 @@ public class Receiver implements Runnable {
 				System.out.println(response.toString());
 
 				packet.setLength(buffer.length);
-				
 				byte[] data = response.toString().getBytes();
 				DatagramPacket send_packet = new DatagramPacket(data, data.length, packet.getAddress(),packet.getPort());
 				dsocket.send(send_packet);
