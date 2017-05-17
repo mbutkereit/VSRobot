@@ -9,9 +9,8 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 
-import org.cads.ev3.middleware.CaDSEV3RobotStudentImplementation;
-import org.cads.ev3.middleware.CaDSEV3RobotType;
-import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveGripper;
+import interfaces.InterfaceIIDLCaDSEV3RMIMoveVertical;
+import utilities.ParameterParser;
 
 /**
  * Die Klasse ist verantwortlich für das Unmarshalling.
@@ -19,19 +18,19 @@ import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveGripper;
  * @author wilhelm
  *
  */
-public class IDLCaDSEV3RMIMoveGripperSkeleton implements InterfaceSkeleton {
+public class IIDLCaDSEV3RMIMoveVerticalSkeleton implements InterfaceSkeleton {
 
-	public final static String ServiceClass = "InterfaceIDLCaDSEV3RMIMoveGripper";
+	public final static String ServiceClass = "InterfaceIIDLCaDSEV3RMIMoveVertical";
 	
 	
 	
-	private InterfaceIDLCaDSEV3RMIMoveGripper imp;
+	private InterfaceIIDLCaDSEV3RMIMoveVertical imp;
 
 	/**
 	 * Konstruktor
 	 * 
 	 */
-	public IDLCaDSEV3RMIMoveGripperSkeleton(InterfaceIDLCaDSEV3RMIMoveGripper imp) {
+	public IIDLCaDSEV3RMIMoveVerticalSkeleton(InterfaceIIDLCaDSEV3RMIMoveVertical imp) {
 		this.imp = imp;
 	}
 
@@ -49,29 +48,30 @@ public class IDLCaDSEV3RMIMoveGripperSkeleton implements InterfaceSkeleton {
 			String className = obj.getString("ObjectName");
 			String methodName = obj.getString("FunctionName");
 
-			if (!(className.equals(IDLCaDSEV3RMIMoveGripperSkeleton.ServiceClass))) {
+			if (!(className.equals(IIDLCaDSEV3RMIMoveVerticalSkeleton.ServiceClass))) {
 				throw new Exception("Class not found.");
 			} else {
 				
 				Map<Long, Object> parameterList = parser.parse(obj);
 				
 				switch (methodName) {
-				  case "openGripper": 
-	 int Transaction_ID_openGripper = (Integer)parameterList.get(0L);
+				  case "moveVerticalToPercent": 
+	 int paramInt1_moveVerticalToPercent = (Integer)parameterList.get(1L);
+	int paramInt2_moveVerticalToPercent = (Integer)parameterList.get(2L);
 	 
-	 int result_openGripper = this.imp.openGripper(Transaction_ID_openGripper);
-	response.add("ReturnValue", result_openGripper);
+	 int result_moveVerticalToPercent = this.imp.moveVerticalToPercent(paramInt1_moveVerticalToPercent, paramInt2_moveVerticalToPercent);
+	response.add("ReturnValue", result_moveVerticalToPercent);
 	break;
-	case "closeGripper": 
-	 int Transaction_ID_closeGripper = (Integer)parameterList.get(0L);
+	case "stop": 
+	 int paramInt_stop = (Integer)parameterList.get(1L);
 	 
-	 int result_closeGripper = this.imp.closeGripper(Transaction_ID_closeGripper);
-	response.add("ReturnValue", result_closeGripper);
+	 int result_stop = this.imp.stop(paramInt_stop);
+	response.add("ReturnValue", result_stop);
 	break;
-	case "isGripperClosed": 
+	case "getCurrentVerticalPercent": 
 	  
-	 int result_isGripperClosed = this.imp.isGripperClosed();
-	response.add("ReturnValue", result_isGripperClosed);
+	 int result_getCurrentVerticalPercent = this.imp.getCurrentVerticalPercent();
+	response.add("ReturnValue", result_getCurrentVerticalPercent);
 	break;
 	
 				default:

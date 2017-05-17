@@ -1,11 +1,12 @@
 package nameserver.service42;
 
-import implementation.NameserverRpcImplementation;
+import implementation.IDLCaDSEV3RMINameserverRegistrationImplementation;
 
 import java.io.IOException;
 
 import fi.iki.elonen.NanoWSD;
 import provider.Forwarder;
+import provider.IDLCaDSEV3RMINameserverRegistrationSkeleton;
 import provider.Receiver;
 
 /**
@@ -25,7 +26,7 @@ public class Service {
 			InterruptedException {
 
 		//Test NameserverRpc implementation
-		NameserverRpcImplementation imp = new NameserverRpcImplementation();
+		IDLCaDSEV3RMINameserverRegistrationImplementation imp = new IDLCaDSEV3RMINameserverRegistrationImplementation();
 		imp.registerService("InterfaceIDLCaDSEV3RMIMoveGripper", "127.0.0.1",
 				3232);
 		
@@ -33,6 +34,14 @@ public class Service {
 		Thread forwarderProviderThread = new Thread(new Receiver(
 				new Forwarder(), 9090));
 		forwarderProviderThread.start();
+		
+		//Registration Service.
+		Thread nameserverRegistrationThread = new Thread(new Receiver(
+				new IDLCaDSEV3RMINameserverRegistrationSkeleton(
+						new IDLCaDSEV3RMINameserverRegistrationImplementation()
+						), 
+				9091));
+		nameserverRegistrationThread.start();
 
 		UserList list = UserList.getInstance();
 		NanoWSD ws = new DebugWebSocketServer(8042, list);

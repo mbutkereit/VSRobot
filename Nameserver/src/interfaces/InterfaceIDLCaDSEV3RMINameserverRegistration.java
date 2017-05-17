@@ -1,4 +1,4 @@
-package client;
+package interfaces;
 
 public interface InterfaceIDLCaDSEV3RMINameserverRegistration {
 

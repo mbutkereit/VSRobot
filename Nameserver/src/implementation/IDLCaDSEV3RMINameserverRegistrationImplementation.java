@@ -3,6 +3,7 @@ package implementation;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import interfaces.InterfaceIDLCaDSEV3RMINameserverRegistration;
 import service.ServiceList;
 
 /**
@@ -12,7 +13,7 @@ import service.ServiceList;
  * @author Marvin und Wilhelm
  *
  */
-public class NameserverRpcImplementation {
+public class IDLCaDSEV3RMINameserverRegistrationImplementation implements InterfaceIDLCaDSEV3RMINameserverRegistration{
 
 	/**
 	 * Fügt einen Dienst zur Serviceliste hinzu.
@@ -20,7 +21,7 @@ public class NameserverRpcImplementation {
 	 * @param ip IP-Adresse des Dienstes
 	 * @param port Portnummer des Dientes
 	 */
-	public void registerService(String serviceName, String ip, int port) {
+	public int registerService(String serviceName, String ip, int port) {
 		ServiceList list = ServiceList.getInstance();
 		InetAddress ia = null;
 		try {
@@ -30,24 +31,31 @@ public class NameserverRpcImplementation {
 			e.printStackTrace();
 		}
 		list.registerService(serviceName, ia, port);
+		return 0;
 	}
 
 	/**
 	 * Entfernt einen Dienst aus der Serviceliste.
 	 * @param name Name des Dienstes
 	 */
-	public void unregisterService(String name) {
+	public int unregisterService(int name) {
 		ServiceList list = ServiceList.getInstance();
-		list.unregisterService(name);
+		//list.unregisterService(name);
+		
+		return 0;
 	}
 
 	/**
 	 * Liefert alle Elemente des Namespaces.
 	 * @return ein Stringarray  mit allen Namen aus dem Namespace.
 	 */
-	public String[] getAllNamespaces() {
+	public String lookup(String name) {
 		ServiceList list = ServiceList.getInstance();
-		return list.getAllNamespaces();
+		return null;
+	//	return list.getAllNamespaces();
 	}
+
+
+
 
 }

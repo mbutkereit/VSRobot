@@ -9,9 +9,8 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 
-import org.cads.ev3.middleware.CaDSEV3RobotStudentImplementation;
-import org.cads.ev3.middleware.CaDSEV3RobotType;
-import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveGripper;
+import interfaces.InterfaceIDLCaDSEV3RMINameserverRegistration;
+import utilities.ParameterParser;
 
 /**
  * Die Klasse ist verantwortlich für das Unmarshalling.
@@ -19,11 +18,10 @@ import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveGripper;
  * @author wilhelm
  *
  */
-public class IDLCaDSEV3RMINameserverRegistrationSkeleton implements InterfaceSkeleton {
+public class IDLCaDSEV3RMINameserverRegistrationSkeleton implements InterfaceForwarder {
 
 	public final static String ServiceClass = "InterfaceIDLCaDSEV3RMINameserverRegistration";
-	
-	
+
 	private InterfaceIDLCaDSEV3RMINameserverRegistration imp;
 
 	/**
@@ -46,7 +44,7 @@ public class IDLCaDSEV3RMINameserverRegistrationSkeleton implements InterfaceSke
 			String className = obj.getString("ObjectName");
 			String methodName = obj.getString("FunctionName");
 
-			if (!(className.equals(InterfaceIDLCaDSEV3RMINameserverRegistration.ServiceClass))) {
+			if (!(className.equals(IDLCaDSEV3RMINameserverRegistrationSkeleton.ServiceClass))) {
 				throw new Exception("Class not found.");
 			} else {
 
@@ -54,22 +52,22 @@ public class IDLCaDSEV3RMINameserverRegistrationSkeleton implements InterfaceSke
 
 				switch (methodName) {
 				case "registerService":
-					String serviceName_registerService = (String) parameterList.get(0L);
-					String ip_registerService = (String) parameterList.get(1L);
-					int port_registerService = (Integer) parameterList.get(2L);
+					String serviceName_registerService = (String) parameterList.get(1L);
+					String ip_registerService = (String) parameterList.get(2L);
+					int port_registerService = (Integer) parameterList.get(3L);
 
 					int result_registerService = this.imp.registerService(serviceName_registerService,
 							ip_registerService, port_registerService);
 					response.add("ReturnValue", result_registerService);
 					break;
 				case "unregisterService":
-					int serviceName_unregisterService = (Integer) parameterList.get(0L);
+					int serviceName_unregisterService = (Integer) parameterList.get(1L);
 
 					int result_unregisterService = this.imp.unregisterService(serviceName_unregisterService);
 					response.add("ReturnValue", result_unregisterService);
 					break;
 				case "lookup":
-					String serviceName_lookup = (String) parameterList.get(0L);
+					String serviceName_lookup = (String) parameterList.get(1L);
 
 					String result_lookup = this.imp.lookup(serviceName_lookup);
 					response.add("ReturnValue", result_lookup);
