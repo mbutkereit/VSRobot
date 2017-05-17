@@ -25,6 +25,11 @@ public class Sender extends Thread {
 	/**
 	 * Portnummer für die Verbindung zum Server
 	 */
+	public static final int PORTNUMMERRECIEVER = 9092;
+	
+	/**
+	 * Portnummer für die Verbindung zum Server
+	 */
 	public static final int PORTNUMMERLOOKUP = 9091;
 
 	/**

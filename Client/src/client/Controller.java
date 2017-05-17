@@ -8,14 +8,10 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.json.Json;
-import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import javax.json.JsonValue;
 
 import dienste.IIDLCaDSEV3RMIMoveGripper;
 import dienste.IIDLCaDSEV3RMIMoveHorizontal;
@@ -112,7 +108,7 @@ public class Controller
 
 	@Override
 	public void update(String arg0) {
-		System.out.println("Update Methode");
+		currentRoboter=arg0;
 
 	}
 
@@ -159,7 +155,7 @@ public class Controller
 	}
 
 	@Override
-	public int closeGripper(int arg0) throws Exception {
+	public int closeGripper(int arg0,) throws Exception {
 		gripperstub.closeGripper(arg0);
 		return 10;
 	}
@@ -189,10 +185,6 @@ public class Controller
 		gui.setGripperClosed();
 		gui.setVerticalProgressbar(20);
 		gui.setHorizontalProgressbar(20);
-		gui.addService("TestService1");
-		gui.addService("TestService2");
-		gui.addService("TestServiece3");
-		gui.removeService("TestService2");
 		gui.startGUIRefresh(5000);
 
 		String[] name = lookup(fifoNamespace);
@@ -228,22 +220,34 @@ public class Controller
 		try {
 			socket.send(packet);
 			System.out.println("Paket gesendet");
+			packet = new DatagramPacket(receiveData, receiveData.length, ia,
+					Sender.PORTNUMMERLOOKUP);
+			System.out.println(new String(packet.getData()));
 			socket.receive(packet);
+			System.out.println(new String(packet.getData()));
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
+		System.out.println("Paket erhalten");
 
 		try (InputStream is = new ByteArrayInputStream(receiveData, 0,
 				packet.getLength()); JsonReader rdr = Json.createReader(is)) {
 
-			List<String> liste = new ArrayList<String>();
 			JsonObject obj2 = rdr.readObject();
-			JsonArray nameArray = obj2.getJsonArray("namespace");
-			for(JsonValue object:nameArray){
-				liste.add(object.toString());
+			System.out.println("Recieve::::::::"+obj2.toString());
+			String namespace = obj2.getString("ReturnValue");
+			String [] array = namespace.split(",");
+			for(String text:array){
+				System.out.println(text);
 			}
 			
-			System.out.println(liste.toString());
+			roboternamearray = array;
+			currentRoboter= roboternamearray[0];
+			
+			for(String roboternamen:roboternamearray){
+				gui.addService(roboternamen);
+			}
+			
 			
 
 			

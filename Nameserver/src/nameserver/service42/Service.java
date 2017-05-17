@@ -27,7 +27,11 @@ public class Service {
 
 		//Test NameserverRpc implementation
 		IDLCaDSEV3RMINameserverRegistrationImplementation imp = new IDLCaDSEV3RMINameserverRegistrationImplementation();
-		imp.registerService("Roboter.InterfaceIDLCaDSEV3RMIMoveGripper", "127.0.0.1",
+		imp.registerService("Roboter1.InterfaceIDLCaDSEV3RMIMoveGripper", "127.0.0.1",
+				3232);
+		imp.registerService("Roboter2.InterfaceIDLCaDSEV3RMIMoveGripper", "127.0.0.1",
+				3232);
+		imp.registerService("Roboter3.InterfaceIDLCaDSEV3RMIMoveGripper", "127.0.0.1",
 				3232);
 		
 	

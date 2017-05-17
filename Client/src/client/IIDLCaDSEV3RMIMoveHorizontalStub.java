@@ -96,6 +96,7 @@ public class IIDLCaDSEV3RMIMoveHorizontalStub implements InterfaceIIDLCaDSEV3RMI
 //		System.out
 //				.println("Objekt in die Queue gelegt: \n" + object.toString());
 		fifo.enque(object);
+		
 		return 0;
     }
     
