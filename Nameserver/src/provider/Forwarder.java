@@ -14,7 +14,7 @@ import javax.json.JsonReader;
 
 import service.ServiceList;
 
-public class Forwarder implements InterfaceSkeleton {
+public class Forwarder implements InterfaceForwarder {
 
 	public JsonObject handle(byte[] buffer, int length) {
 

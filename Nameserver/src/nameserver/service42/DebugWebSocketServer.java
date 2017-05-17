@@ -44,7 +44,7 @@ public class DebugWebSocketServer extends NanoWSD {
         public DebugWebSocket(DebugWebSocketServer server, IHTTPSession handshakeRequest) {
             super(handshakeRequest);
             user = new User();
-            user.webSocket = this;
+            user.setWebSocket(this);
             userList.addUser(user);
             this.httpSession = handshakeRequest;
         }

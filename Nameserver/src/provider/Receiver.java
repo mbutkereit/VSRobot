@@ -6,27 +6,60 @@ import java.net.DatagramSocket;
 import javax.json.JsonObject;
 
 
+/**
+ * Dieser Thread empfängt die Nachrichten von den Clienten.
+ * @author Wilhelm und Marvin
+ *
+ */
 public class Receiver implements Runnable {
 	
+	/**
+	 * Datagrammsocket
+	 */
 	private DatagramSocket dsocket;
 	
-	private InterfaceSkeleton skeleton;
+	/**
+	 * Eine Forwardstruktur, die verantwortlich für das weiterleiten ist.
+	 */
+	private InterfaceForwarder forwarder;
+	
+	/**
+	 * Portnummer des Clienten.
+	 */
 	private int port;
+	
+	/**
+	 * Maximale Buffergröße.
+	 */
 	private int bufferSize;
 	
-	public Receiver(InterfaceSkeleton skeleton,int port){
-		this.skeleton = skeleton;
+	/**
+	 * Konstruktor
+	 * @param forwarder Instanz zum Verarbeiten der Nachricht.
+	 * @param port Port des Clienten.
+	 */
+	public Receiver(InterfaceForwarder forwarder,int port){
+		this.forwarder = forwarder;
 		this.port = port;
 		this.bufferSize = 2048;
 	}
 	
-	public Receiver(InterfaceSkeleton skeleton,int port, int bufferSize){
-		this.skeleton = skeleton;
+	/**
+	 * siehe anderer Konstruktor
+	 * @param skeleton
+	 * @param port
+	 * @param bufferSize
+	 */
+	public Receiver(InterfaceForwarder skeleton,int port, int bufferSize){
+		this.forwarder = skeleton;
 		this.port = port;
 		this.bufferSize = bufferSize;
 	}
 	
 	
+	/**
+	 * Empfängt Nachrichten vom Client und verarbeitet diese.
+	 */
 	@Override
 	public void run() {
 		
@@ -40,7 +73,7 @@ public class Receiver implements Runnable {
 				dsocket.receive(packet);
 				
 				System.out.println("New Packet:");
-				JsonObject response = this.skeleton.handle(buffer, packet.getLength());
+				JsonObject response = this.forwarder.handle(buffer, packet.getLength());
 				System.out.println(response.toString());
 
 				packet.setLength(buffer.length);

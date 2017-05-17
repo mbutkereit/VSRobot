@@ -5,7 +5,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
-import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import javax.json.JsonObject;
@@ -17,9 +16,9 @@ import javax.json.JsonObject;
  *
  */
 public class Sender extends Thread {
-
+	
 	/**
-	 * Portnummer f�r die Verbindung zum Server
+	 * Portnummer für die Verbindung zum Server
 	 */
 	public static final int PORTNUMMER = 9090;
 
@@ -27,12 +26,17 @@ public class Sender extends Thread {
 	 * Die Adresse vom Server.
 	 */
 	public static final String IP_ADRESSE = "127.0.0.1";
+	
+	/**
+	 * Reciever
+	 */
+	private Reciever reciever = null;
 
 	/**
-	 * enh�lt die JsonObjekte
+	 * Enthält die JsonObjekte, die versendet werden sollen.
 	 */
-	private FifoQueue queue = null;
-
+	private FifoQueue sendQueue = null;
+	
 	/**
 	 * Verbindungsendpunkt um Nachrichten zum Server zu schicken.
 	 */
@@ -46,8 +50,9 @@ public class Sender extends Thread {
 	/**
 	 * Konstruktor
 	 */
-	public Sender(FifoQueue queue) {
-		this.queue = queue;
+	public Sender(FifoQueue queue,Reciever reciever) {
+		this.sendQueue = queue;
+		this.reciever=reciever;
 	}
 
 	/**
@@ -79,10 +84,9 @@ public class Sender extends Thread {
 		init();
 		createSocket();
 		DatagramPacket packet = null;
-		boolean answerRecieved = false;
 
 		while (!isInterrupted()) {
-			JsonObject object = queue.deque();
+			JsonObject object = sendQueue.deque();
 			
 			System.out.println("Senden:::::: "+object.toString());
 
@@ -92,22 +96,24 @@ public class Sender extends Thread {
 			try {
 				socket.send(packet);
 				System.out.println("Paket gesendet");
-				socket.setSoTimeout(2000);
 
-				answerRecieved = false;
-//				int versuche = 0;
-//				while (!(answerRecieved) && versuche <5) {
-//					try {
-//						socket.receive(packet);
-//						answerRecieved = true;
-//					} catch (SocketTimeoutException e) {
-//						System.err
-//								.println("Timeout: Versuche die Nachricht noch einmal zu �bertragen");
-//						versuche++;
-//						socket.send(packet);
-//						System.out.println("Paket erneut gesendet");
-//					}
-//				}
+				
+				int versuche = 0;
+				while (reciever.getAntworten() == 0 && (versuche < 5)) {
+					try {
+						sleep(100);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+						System.err
+								.println("Timeout: Versuche die Nachricht noch einmal zu �bertragen");
+						versuche++;
+						socket.send(packet);
+	
+				}
+				reciever.setAntworten(reciever.getAntworten()-1);
+				
 
 			} catch (SocketException e) {
 				System.err.println("Socket has been closed .");

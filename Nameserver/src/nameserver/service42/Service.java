@@ -8,8 +8,19 @@ import fi.iki.elonen.NanoWSD;
 import provider.Forwarder;
 import provider.Receiver;
 
+/**
+ * Programmeinstieg
+ * @author Wilhelm und Marvin
+ *
+ */
 public class Service {
 
+	/**
+	 * Main
+	 * @param args Kommandozeilenparameter
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public static void main(String[] args) throws IOException,
 			InterruptedException {
 

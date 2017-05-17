@@ -160,6 +160,8 @@ public class Controller implements IIDLCaDSEV3RMIMoveGripper,
 		gui.setHorizontalProgressbar(20);
 		gui.addService("TestService1");
 		gui.addService("TestService2");
+		gui.addService("TestServiece3");
+		gui.removeService("TestService2");
 		gui.startGUIRefresh(5000);
 	}
 
@@ -171,16 +173,19 @@ public class Controller implements IIDLCaDSEV3RMIMoveGripper,
 	 */
 	public static void main(String[] args) {
 		// Logik
-		FifoQueue fifo = new FifoQueue();
-		Controller c = new Controller(fifo);
+		FifoQueue sendQueue = new FifoQueue();
+		FifoQueue recieveQueue = new FifoQueue();
+		Controller c = new Controller(sendQueue);
+		
+		// Reciever
+		Reciever reciever = new Reciever(recieveQueue);
 
 		// Startet den Sender um Nachrichten an den Server zu schicken
-		Sender sender = new Sender(fifo);
+		Sender sender = new Sender(sendQueue,reciever);
+		
+		reciever.start();
 		sender.start();
 
-		// Reciever
-		Reciever reciever = new Reciever();
-		reciever.start();
 		try {
 			sender.join();
 			reciever.join();

@@ -40,7 +40,7 @@ public class UserList {
 	public void sendToAll(String str) {
 		for (int i = 0; i < list.size(); i++) {
 			User user = list.get(i);
-			WebSocket ws = user.webSocket;
+			WebSocket ws = user.getWebSocket();
 			if (ws != null) {
 				try {
 					ws.ping(str.getBytes());
@@ -61,7 +61,7 @@ public class UserList {
 	public void sendToAllMessage(String str) {
 		for (int i = 0; i < list.size(); i++) {
 			User user = list.get(i);
-			WebSocket ws = user.webSocket;
+			WebSocket ws = user.getWebSocket();
 			if (ws != null) {
 				try {
 					ws.send(str);
@@ -81,7 +81,7 @@ public class UserList {
 	public void disconectAll() {
 		for (int i = 0; i < list.size(); i++) {
 			User user = list.get(i);
-			WebSocket ws = user.webSocket;
+			WebSocket ws = user.getWebSocket();
 			if (ws != null) {
 				try {
 					ws.close(CloseCode.InvalidFramePayloadData, "reqrement",
