@@ -1,6 +1,21 @@
 package client;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import javax.json.JsonValue;
 
 import dienste.IIDLCaDSEV3RMIMoveGripper;
 import dienste.IIDLCaDSEV3RMIMoveHorizontal;
@@ -9,16 +24,15 @@ import dienste.IIDLCaDSEV3RMIUltraSonic;
 import gui.CaDSRobotGUISwing;
 import gui.ICaDSRobotGUIUpdater;
 
-
 /**
  * Die Klasse wird von der Gui benachrichtigt, wenn sich etwas ver�ndert.
  * 
  * @author wilhelm
  *
  */
-public class Controller implements IIDLCaDSEV3RMIMoveGripper,
-		IIDLCaDSEV3RMIMoveHorizontal, IIDLCaDSEV3RMIMoveVertical,
-		IIDLCaDSEV3RMIUltraSonic, ICaDSRMIConsumer {
+public class Controller
+		implements IIDLCaDSEV3RMIMoveGripper, IIDLCaDSEV3RMIMoveHorizontal,
+		IIDLCaDSEV3RMIMoveVertical, IIDLCaDSEV3RMIUltraSonic, ICaDSRMIConsumer {
 	/**
 	 * Instanz der Gui
 	 */
@@ -33,41 +47,56 @@ public class Controller implements IIDLCaDSEV3RMIMoveGripper,
 	 * Der Gripperstub ist verantwortlich f�r das Mahrshalling.
 	 */
 	private InterfaceIDLCaDSEV3RMIMoveGripper gripperstub = null;
-	
+
 	/**
 	 * Stub für die vertikale Bewegung.
 	 */
 	private InterfaceIIDLCaDSEV3RMIMoveVertical verticalstub = null;
-	
+
 	/**
 	 * Stub für die horizontale Bewegung.
 	 */
 	private InterfaceIIDLCaDSEV3RMIMoveHorizontal horizontalstub = null;
-	
+
 	/**
 	 * Stub für den Ultraschall.
 	 */
 	private InterfaceIIDLCaDSEV3RMIUltraSonic ultrasonicstub = null;
-	
+
+	/**
+	 * 
+	 */
+	private InterfaceIDLCaDSEV3RMINameserverRegistration nameserverRegStub = null;
+
 	/**
 	 * 
 	 */
 	private int horizontalPercent = 50;
-	
+
 	/**
 	 * 
 	 */
 	private int verticalPercent = 50;
-	
+
 	/**
 	 * 
 	 */
 	private int gripperstate = 0;
-	
+
 	/**
 	 * 
 	 */
 	private int ultrasonicState = 0;
+
+	/**
+	 * Der aktuell ausgewählte Roboter
+	 */
+	private String currentRoboter = null;
+
+	/**
+	 * Alle auswählbaren Roboter
+	 */
+	private String[] roboternamearray = null;
 
 	/**
 	 * Konstruktor
@@ -148,11 +177,13 @@ public class Controller implements IIDLCaDSEV3RMIMoveGripper,
 	 *            eine Queue f�r die JsonDokumente
 	 */
 	private void init(FifoQueue fifo) {
-		factory = new StubFactory(fifo);
+		FifoQueue fifoNamespace = new FifoQueue();
+		factory = new StubFactory(fifo, fifoNamespace);
 		gripperstub = factory.getGripperStub();
 		verticalstub = factory.getVerticalStub();
 		horizontalstub = factory.getHorizontalStub();
 		ultrasonicstub = factory.getUltraSonicStub();
+		nameserverRegStub = factory.getNameserverRegStub();
 		// Gui
 		gui = new CaDSRobotGUISwing(this, this, this, this, this);
 		gui.setGripperClosed();
@@ -163,6 +194,64 @@ public class Controller implements IIDLCaDSEV3RMIMoveGripper,
 		gui.addService("TestServiece3");
 		gui.removeService("TestService2");
 		gui.startGUIRefresh(5000);
+
+		String[] name = lookup(fifoNamespace);
+	}
+
+	private String[] lookup(FifoQueue queue) {
+
+		InetAddress ia = null;
+		try {
+			ia = InetAddress.getByName(Sender.IP_ADRESSE);
+		} catch (UnknownHostException e) {
+			System.err.println("Unknown Host.");
+			e.printStackTrace();
+		}
+		DatagramSocket socket = null;
+		try {
+			socket = new DatagramSocket();
+		} catch (SocketException e) {
+			System.err.println("Error creating or accessing a Socket.");
+			e.printStackTrace();
+		}
+
+		DatagramPacket packet = null;
+		nameserverRegStub.lookup("ALL");
+		JsonObject obj = queue.deque();
+		byte[] receiveData = new byte[2048];
+
+		System.out.println("Senden:::::: " + obj.toString());
+		// get the byte array of the object
+		byte[] data = obj.toString().getBytes();
+		packet = new DatagramPacket(data, data.length, ia,
+				Sender.PORTNUMMERLOOKUP);
+		try {
+			socket.send(packet);
+			System.out.println("Paket gesendet");
+			socket.receive(packet);
+		} catch (Exception e) {
+
+		}
+
+		try (InputStream is = new ByteArrayInputStream(receiveData, 0,
+				packet.getLength()); JsonReader rdr = Json.createReader(is)) {
+
+			List<String> liste = new ArrayList<String>();
+			JsonObject obj2 = rdr.readObject();
+			JsonArray nameArray = obj2.getJsonArray("namespace");
+			for(JsonValue object:nameArray){
+				liste.add(object.toString());
+			}
+			
+			System.out.println(liste.toString());
+			
+
+			
+		} catch (IOException e) {
+			System.err.println("Fehler beim Lesen des JsonObjectes");
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
@@ -176,13 +265,13 @@ public class Controller implements IIDLCaDSEV3RMIMoveGripper,
 		FifoQueue sendQueue = new FifoQueue();
 		FifoQueue recieveQueue = new FifoQueue();
 		Controller c = new Controller(sendQueue);
-		
+
 		// Reciever
 		Reciever reciever = new Reciever(recieveQueue);
 
 		// Startet den Sender um Nachrichten an den Server zu schicken
-		Sender sender = new Sender(sendQueue,reciever);
-		
+		Sender sender = new Sender(sendQueue, reciever);
+
 		reciever.start();
 		sender.start();
 

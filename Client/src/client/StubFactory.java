@@ -12,9 +12,15 @@ public class StubFactory {
 	 * Queue f�r die Stubs.
 	 */
 	private FifoQueue fifo = null;
+	
+	/**
+	 * Queue für den Lookup.
+	 */
+	private FifoQueue namespacefifo = null;
 
-	public StubFactory(FifoQueue fifo) {
+	public StubFactory(FifoQueue fifo,FifoQueue andereFifo) {
 		this.fifo = fifo;
+		namespacefifo=andereFifo;
 	}
 
 	/**
@@ -55,5 +61,15 @@ public class StubFactory {
 	 */
 	public InterfaceIIDLCaDSEV3RMIUltraSonic getUltraSonicStub() {
 		return new IIDLCaDSEV3RMIUltraSonicStub(fifo);
+	}
+	
+	/**
+	 * Holt den richtigen NameserverRegStub
+	 * 
+	 * @param methode
+	 * @return 
+	 */
+	public IDLCaDSEV3RMINameserverRegistrationStub getNameserverRegStub() {
+		return new IDLCaDSEV3RMINameserverRegistrationStub(namespacefifo);
 	}
 }
