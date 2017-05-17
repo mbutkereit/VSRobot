@@ -1,6 +1,6 @@
 package client;
 
-public interface InterfaceIIDLCaDSEV3RMIMoveVertical {
+public interface InterfaceIDLCaDSEV3RMIMoveVertical {
 
    
     public int moveVerticalToPercent(int paramInt1, int paramInt2);

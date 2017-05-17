@@ -12,7 +12,7 @@ import javax.json.JsonArrayBuilder;
  * @author wilhelm
  *
  */
-public class IIDLCaDSEV3RMIUltraSonicStub implements InterfaceIIDLCaDSEV3RMIUltraSonic {
+public class IDLCaDSEV3RMIUltraSonicStub implements InterfaceIDLCaDSEV3RMIUltraSonic {
 
 	/**
 	 * Eine Queue für die JsonDokumente.
@@ -39,14 +39,14 @@ public class IIDLCaDSEV3RMIUltraSonicStub implements InterfaceIIDLCaDSEV3RMIUltr
 	 * 
 	 * @param fifo
 	 */
-	public IIDLCaDSEV3RMIUltraSonicStub(FifoQueue fifo) {
+	public IDLCaDSEV3RMIUltraSonicStub(FifoQueue fifo) {
 		this.fifo = fifo;
 		factory = Json.createBuilderFactory(null);
 		builder = factory.createObjectBuilder();
 
 		stubinterface = null;
 		try {
-			stubinterface = Class.forName("client.InterfaceIIDLCaDSEV3RMIUltraSonic");
+			stubinterface = Class.forName("client.InterfaceIDLCaDSEV3RMIUltraSonic");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,10 +59,10 @@ public class IIDLCaDSEV3RMIUltraSonicStub implements InterfaceIIDLCaDSEV3RMIUltr
 		JsonArrayBuilder abuilder = Json.createArrayBuilder();
 		
 		builder.add("Parameter", abuilder);
-		builder.add("ObjectName", stubinterface.getSimpleName());
+		builder.add("ObjectName",Controller.currentRoboter+"."+ stubinterface.getSimpleName());
 		JsonObject object = builder.build();
-//		System.out
-//				.println("Objekt in die Queue gelegt: \n" + object.toString());
+		System.out
+				.println("Objekt in die Queue gelegt: \n" + object.toString());
 		fifo.enque(object);
 		return 0;
     }

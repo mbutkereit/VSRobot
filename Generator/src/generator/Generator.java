@@ -6,6 +6,13 @@ import java.io.IOException;
 
 import org.json.simple.parser.ParseException;
 
+// Zum Generieren
+// idl/idls/MoveGripper.json
+// idl/idls/MoveHorizontal.json
+// idl/idls/MoveVertical.json
+// idl/idls/NameserverRegistration.json
+// idl/idls/UltraSonic.json
+
 public class Generator {
 
 	public static void main(String[] args) throws FileNotFoundException,

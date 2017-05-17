@@ -1,5 +1,5 @@
 {
-	"ObjectName": "IIDLCaDSEV3RMIMoveHorizontal",
+	"ObjectName": "IDLCaDSEV3RMIMoveHorizontal",
 	"Functions": [
 		{
 			"Function_Name": "moveHorizontalToPercent",

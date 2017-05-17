@@ -59,7 +59,7 @@ public class IDLCaDSEV3RMINameserverRegistrationStub implements InterfaceIDLCaDS
 		JsonArrayBuilder abuilder = Json.createArrayBuilder();
 		abuilder.add(factory.createObjectBuilder().add("position",1).add("type","String").add("value", serviceName));abuilder.add(factory.createObjectBuilder().add("position",2).add("type","String").add("value", ip));abuilder.add(factory.createObjectBuilder().add("position",3).add("type","int").add("value", port));
 		builder.add("Parameter", abuilder);
-		builder.add("ObjectName", stubinterface.getSimpleName());
+		builder.add("ObjectName",Controller.currentRoboter+"."+ stubinterface.getSimpleName());
 		JsonObject object = builder.build();
 		System.out
 				.println("Objekt in die Queue gelegt: \n" + object.toString());
@@ -69,13 +69,13 @@ public class IDLCaDSEV3RMINameserverRegistrationStub implements InterfaceIDLCaDS
     
     
     
-    public int unregisterService(int serviceName) {
+    public int unregisterService(String serviceName) {
     
 		builder.add("FunctionName", "unregisterService").add("Type", "Request");
 		JsonArrayBuilder abuilder = Json.createArrayBuilder();
-		abuilder.add(factory.createObjectBuilder().add("position",1).add("type","int").add("value", serviceName));
+		abuilder.add(factory.createObjectBuilder().add("position",1).add("type","String").add("value", serviceName));
 		builder.add("Parameter", abuilder);
-		builder.add("ObjectName", stubinterface.getSimpleName());
+		builder.add("ObjectName",Controller.currentRoboter+"."+ stubinterface.getSimpleName());
 		JsonObject object = builder.build();
 		System.out
 				.println("Objekt in die Queue gelegt: \n" + object.toString());
@@ -83,15 +83,13 @@ public class IDLCaDSEV3RMINameserverRegistrationStub implements InterfaceIDLCaDS
 		return 0;
     }
     
-    
-    
-    public String lookup(String serviceName) {
+	public String lookup(String serviceName) {
     
 		builder.add("FunctionName", "lookup").add("Type", "Request");
 		JsonArrayBuilder abuilder = Json.createArrayBuilder();
 		abuilder.add(factory.createObjectBuilder().add("position",1).add("type","String").add("value", serviceName));
 		builder.add("Parameter", abuilder);
-		builder.add("ObjectName", stubinterface.getSimpleName());
+		builder.add("ObjectName",Controller.currentRoboter+"."+ stubinterface.getSimpleName());
 		JsonObject object = builder.build();
 		System.out
 				.println("Objekt in die Queue gelegt: \n" + object.toString());

@@ -14,13 +14,11 @@ public class StubFactory {
 	private FifoQueue fifo = null;
 	
 	/**
-	 * Queue für den Lookup.
+	 * Konstruktor
+	 * @param fifo
 	 */
-	private FifoQueue namespacefifo = null;
-
-	public StubFactory(FifoQueue fifo,FifoQueue andereFifo) {
+	public StubFactory(FifoQueue fifo) {
 		this.fifo = fifo;
-		namespacefifo=andereFifo;
 	}
 
 	/**
@@ -39,8 +37,8 @@ public class StubFactory {
 	 * @param methode
 	 * @return MoveGripperStub
 	 */
-	public IIDLCaDSEV3RMIMoveVerticalStub getVerticalStub() {
-		return new IIDLCaDSEV3RMIMoveVerticalStub(fifo);
+	public IDLCaDSEV3RMIMoveVerticalStub getVerticalStub() {
+		return new IDLCaDSEV3RMIMoveVerticalStub(fifo);
 	}
 	
 	/**
@@ -49,8 +47,8 @@ public class StubFactory {
 	 * @param methode
 	 * @return MoveGripperStub
 	 */
-	public IIDLCaDSEV3RMIMoveHorizontalStub getHorizontalStub() {
-		return new IIDLCaDSEV3RMIMoveHorizontalStub(fifo);
+	public IDLCaDSEV3RMIMoveHorizontalStub getHorizontalStub() {
+		return new IDLCaDSEV3RMIMoveHorizontalStub(fifo);
 	}
 	
 	/**
@@ -59,8 +57,8 @@ public class StubFactory {
 	 * @param methode
 	 * @return MoveGripperStub
 	 */
-	public InterfaceIIDLCaDSEV3RMIUltraSonic getUltraSonicStub() {
-		return new IIDLCaDSEV3RMIUltraSonicStub(fifo);
+	public InterfaceIDLCaDSEV3RMIUltraSonic getUltraSonicStub() {
+		return new IDLCaDSEV3RMIUltraSonicStub(fifo);
 	}
 	
 	/**
@@ -70,6 +68,6 @@ public class StubFactory {
 	 * @return 
 	 */
 	public IDLCaDSEV3RMINameserverRegistrationStub getNameserverRegStub() {
-		return new IDLCaDSEV3RMINameserverRegistrationStub(namespacefifo);
+		return new IDLCaDSEV3RMINameserverRegistrationStub(fifo);
 	}
 }

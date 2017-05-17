@@ -13,13 +13,17 @@ private CaDSRobotControlGUISwing controller;
 private Thread refreshThread;
 private final ICaDSRMIConsumer consumer;
 
-public CaDSRobotGUISwing(ICaDSRMIConsumer paramICaDSRMIConsumer, IIDLCaDSEV3RMIMoveGripper paramIIDLCaDSEV3RMIMoveGripper, IIDLCaDSEV3RMIMoveVertical paramIIDLCaDSEV3RMIMoveVertical, IIDLCaDSEV3RMIMoveHorizontal paramIIDLCaDSEV3RMIMoveHorizontal, IIDLCaDSEV3RMIUltraSonic paramIIDLCaDSEV3RMIUltraSonic)
+public CaDSRobotGUISwing(ICaDSRMIConsumer paramICaDSRMIConsumer, IIDLCaDSEV3RMIMoveGripper paramIIDLCaDSEV3RMIMoveGripper, IIDLCaDSEV3RMIMoveVertical paramIIDLCaDSEV3RMIMoveVertical, IIDLCaDSEV3RMIMoveHorizontal paramIIDLCaDSEV3RMIMoveHorizontal, IIDLCaDSEV3RMIUltraSonic paramIIDLCaDSEV3RMIUltraSonic,String [] array)
 {
   this.consumer = paramICaDSRMIConsumer;
   this.refreshThread = null;
   this.controller = new CaDSRobotControlGUISwing(paramICaDSRMIConsumer, paramIIDLCaDSEV3RMIMoveGripper, paramIIDLCaDSEV3RMIMoveVertical, paramIIDLCaDSEV3RMIMoveHorizontal);
   this.controller.setDefaultCloseOperation(3);
   this.controller.setVisible(true);
+  
+  for(String robotername:array){
+	  this.addService(robotername);
+  }
 }
 
 public synchronized void startGUIRefresh(int paramInt)
@@ -39,8 +43,7 @@ public synchronized void startGUIRefresh(int paramInt)
 
 public synchronized void stopGUIRefresh()
 {
-  if (this.refreshThread != null)
-  {
+		if (this.refreshThread != null) {
     this.refreshThread.interrupt();
     this.refreshThread = null;
   }

@@ -12,7 +12,7 @@ import javax.json.JsonArrayBuilder;
  * @author wilhelm
  *
  */
-public class IIDLCaDSEV3RMIMoveHorizontalStub implements InterfaceIIDLCaDSEV3RMIMoveHorizontal {
+public class IDLCaDSEV3RMIMoveHorizontalStub implements InterfaceIDLCaDSEV3RMIMoveHorizontal {
 
 	/**
 	 * Eine Queue für die JsonDokumente.
@@ -39,14 +39,14 @@ public class IIDLCaDSEV3RMIMoveHorizontalStub implements InterfaceIIDLCaDSEV3RMI
 	 * 
 	 * @param fifo
 	 */
-	public IIDLCaDSEV3RMIMoveHorizontalStub(FifoQueue fifo) {
+	public IDLCaDSEV3RMIMoveHorizontalStub(FifoQueue fifo) {
 		this.fifo = fifo;
 		factory = Json.createBuilderFactory(null);
 		builder = factory.createObjectBuilder();
 
 		stubinterface = null;
 		try {
-			stubinterface = Class.forName("client.InterfaceIIDLCaDSEV3RMIMoveHorizontal");
+			stubinterface = Class.forName("client.InterfaceIDLCaDSEV3RMIMoveHorizontal");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,10 +59,10 @@ public class IIDLCaDSEV3RMIMoveHorizontalStub implements InterfaceIIDLCaDSEV3RMI
 		JsonArrayBuilder abuilder = Json.createArrayBuilder();
 		abuilder.add(factory.createObjectBuilder().add("position",1).add("type","int").add("value", paramInt1));abuilder.add(factory.createObjectBuilder().add("position",2).add("type","int").add("value", paramInt2));
 		builder.add("Parameter", abuilder);
-		builder.add("ObjectName", stubinterface.getSimpleName());
+		builder.add("ObjectName",Controller.currentRoboter+"."+ stubinterface.getSimpleName());
 		JsonObject object = builder.build();
-//		System.out
-//				.println("Objekt in die Queue gelegt: \n" + object.toString());
+		System.out
+				.println("Objekt in die Queue gelegt: \n" + object.toString());
 		fifo.enque(object);
 		return 0;
     }
@@ -75,10 +75,10 @@ public class IIDLCaDSEV3RMIMoveHorizontalStub implements InterfaceIIDLCaDSEV3RMI
 		JsonArrayBuilder abuilder = Json.createArrayBuilder();
 		abuilder.add(factory.createObjectBuilder().add("position",1).add("type","int").add("value", paramInt));
 		builder.add("Parameter", abuilder);
-		builder.add("ObjectName", stubinterface.getSimpleName());
+		builder.add("ObjectName",Controller.currentRoboter+"."+ stubinterface.getSimpleName());
 		JsonObject object = builder.build();
-//		System.out
-//				.println("Objekt in die Queue gelegt: \n" + object.toString());
+		System.out
+				.println("Objekt in die Queue gelegt: \n" + object.toString());
 		fifo.enque(object);
 		return 0;
     }
@@ -91,12 +91,11 @@ public class IIDLCaDSEV3RMIMoveHorizontalStub implements InterfaceIIDLCaDSEV3RMI
 		JsonArrayBuilder abuilder = Json.createArrayBuilder();
 		
 		builder.add("Parameter", abuilder);
-		builder.add("ObjectName", stubinterface.getSimpleName());
+		builder.add("ObjectName",Controller.currentRoboter+"."+ stubinterface.getSimpleName());
 		JsonObject object = builder.build();
-//		System.out
-//				.println("Objekt in die Queue gelegt: \n" + object.toString());
+		System.out
+				.println("Objekt in die Queue gelegt: \n" + object.toString());
 		fifo.enque(object);
-		
 		return 0;
     }
     

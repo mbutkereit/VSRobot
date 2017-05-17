@@ -1,6 +1,6 @@
 package client;
 
-public interface InterfaceIIDLCaDSEV3RMIUltraSonic {
+public interface InterfaceIDLCaDSEV3RMIUltraSonic {
 
    
     public int isUltraSonicOccupied();

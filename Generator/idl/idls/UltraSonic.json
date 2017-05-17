@@ -1,5 +1,5 @@
 {
-	"ObjectName": "IIDLCaDSEV3RMIUltraSonic",
+	"ObjectName": "IDLCaDSEV3RMIUltraSonic",
 	"Functions": [
 		{
 			"Function_Name": "isUltraSonicOccupied",

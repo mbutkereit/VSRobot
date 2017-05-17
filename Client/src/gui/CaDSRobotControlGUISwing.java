@@ -48,7 +48,7 @@ public class CaDSRobotControlGUISwing
       {
         try
         {
-          CaDSRobotGUISwing localCaDSRobotGUISwing = new CaDSRobotGUISwing(null, null, null, null, null);
+          CaDSRobotGUISwing localCaDSRobotGUISwing = new CaDSRobotGUISwing(null, null, null, null, null,null);
         }
         catch (Exception localException)
         {

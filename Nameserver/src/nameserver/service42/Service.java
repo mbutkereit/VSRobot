@@ -28,6 +28,9 @@ public class Service {
 		//Test NameserverRpc implementation
 		IDLCaDSEV3RMINameserverRegistrationImplementation imp = new IDLCaDSEV3RMINameserverRegistrationImplementation();
 	
+		imp.registerService("roboter1.IDLCaDSEV3RMIMoveGripper","127.0.0.1", 1740);
+		imp.registerService("roboter2.IDLCaDSEV3RMIMoveGripper","127.0.0.1", 1740);
+		imp.registerService("roboter3.IDLCaDSEV3RMIMoveGripper","127.0.0.1", 1740);
 		// Forwarding Service
 		Thread forwarderProviderThread = new Thread(new Receiver(
 				new Forwarder(), 9090));
