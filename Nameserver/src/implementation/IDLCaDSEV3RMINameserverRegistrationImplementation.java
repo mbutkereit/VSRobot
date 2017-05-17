@@ -2,8 +2,15 @@ package implementation;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Map;
+
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObjectBuilder;
 
 import interfaces.InterfaceIDLCaDSEV3RMINameserverRegistration;
+import nameserver.service42.UserList;
+import service.ServiceDefinition;
 import service.ServiceList;
 
 /**
@@ -47,15 +54,27 @@ public class IDLCaDSEV3RMINameserverRegistrationImplementation implements Interf
 
 	/**
 	 * Liefert alle Elemente des Namespaces.
-	 * @return ein Stringarray  mit allen Namen aus dem Namespace.
+	 * 
+	 * @return ein Stringarray mit allen Namen aus dem Namespace.
 	 */
 	public String lookup(String name) {
-		ServiceList list = ServiceList.getInstance();
-		return null;
-	//	return list.getAllNamespaces();
+		StringBuffer json = new StringBuffer();
+		JsonObjectBuilder response = Json.createObjectBuilder();
+		response.add("namespace", this.buildNamespaces());
+		return response.build().toString();
 	}
 
+	private JsonArrayBuilder buildNamespaces() {
 
+		ServiceList list = ServiceList.getInstance();
+		String[] namespaces = list.getAllNamespaces();
+		JsonArrayBuilder builder = Json.createArrayBuilder();
 
+		for (String name_service : namespaces) {
+			builder.add(name_service);
+		}
+		return builder;
+
+	}
 
 }

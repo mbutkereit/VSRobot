@@ -28,7 +28,7 @@
 			"Parameter": [
 				{
 					"position": 1,
-					"type": "int",
+					"type": "String",
 					"name": "serviceName"
 				}
 			]
