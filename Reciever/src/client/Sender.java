@@ -97,7 +97,7 @@ public class Sender extends Thread {
 
 			// get the byte array of the object
 			byte[] data = object.toString().getBytes();
-			packet = new DatagramPacket(data, data.length, ia, PORTNUMMER);
+			packet = new DatagramPacket(data, data.length, ia, PORTNUMMERLOOKUP);
 			try {
 				socket.send(packet);
 				System.out.println("Paket gesendet");

@@ -5,6 +5,7 @@ import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
+import client.FifoQueue;
 import interfaces.InterfaceIDLCaDSEV3RMINameserverRegistration;
 
 import javax.json.JsonArrayBuilder;
@@ -49,7 +50,7 @@ public class IDLCaDSEV3RMINameserverRegistrationStub implements InterfaceIDLCaDS
 
 		stubinterface = null;
 		try {
-			stubinterface = Class.forName("client.InterfaceIDLCaDSEV3RMINameserverRegistration");
+			stubinterface = Class.forName("interfaces.InterfaceIDLCaDSEV3RMINameserverRegistration");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
