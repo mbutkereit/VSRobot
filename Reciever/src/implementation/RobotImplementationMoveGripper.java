@@ -3,8 +3,10 @@ package implementation;
 import org.cads.ev3.middleware.CaDSEV3RobotStudentImplementation;
 import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveGripper;
 
+import interfaces.InterfaceIDLCaDSEV3RMIMoveGripper;
+
 public class RobotImplementationMoveGripper implements
-		IIDLCaDSEV3RMIMoveGripper {
+InterfaceIDLCaDSEV3RMIMoveGripper{
 
 	private CaDSEV3RobotStudentImplementation call = null;
 	private static boolean gripperClosed = false;
@@ -15,14 +17,14 @@ public class RobotImplementationMoveGripper implements
 	}
 
 	@Override
-	public int closeGripper(int arg0) throws Exception {
+	public int closeGripper(int arg0) {
 		this.call.doClose();
 		RobotImplementationMoveGripper.gripperClosed = true;
 		return 0;
 	}
 
 	@Override
-	public int isGripperClosed() throws Exception {
+	public int isGripperClosed() {
 		if (RobotImplementationMoveGripper.gripperClosed == false) {
 			return 1;
 		}
@@ -30,7 +32,7 @@ public class RobotImplementationMoveGripper implements
 	}
 
 	@Override
-	public int openGripper(int arg0) throws Exception {
+	public int openGripper(int arg0) {
 		this.call.doOpen();
 		RobotImplementationMoveGripper.gripperClosed = false;
 		return 0;

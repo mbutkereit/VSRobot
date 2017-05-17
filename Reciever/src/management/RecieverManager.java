@@ -7,8 +7,10 @@ import java.net.UnknownHostException;
 import org.cads.ev3.middleware.CaDSEV3RobotStudentImplementation;
 import org.cads.ev3.middleware.CaDSEV3RobotType;
 
+import interfaces.InterfaceIDLCaDSEV3RMIMoveGripper;
+import others.RobotMoveGripperFactory;
 import others.RobotStatusManager;
-import provider.MoveGripperSkeleton;
+import provider.IDLCaDSEV3RMIMoveGripperSkeleton;
 import provider.Revciever;
 
 public class RecieverManager {
@@ -36,7 +38,11 @@ public class RecieverManager {
 		CaDSEV3RobotStudentImplementation robot = CaDSEV3RobotStudentImplementation
 				.createInstance(CaDSEV3RobotType.SIMULATION, manager, manager);
 		
-		Thread moveGripperProviderThread = new Thread(new Revciever(new MoveGripperSkeleton(robot),3232));
+		RobotMoveGripperFactory factory = new RobotMoveGripperFactory(robot);
+		InterfaceIDLCaDSEV3RMIMoveGripper gripper = factory
+.get(IDLCaDSEV3RMIMoveGripperSkeleton.ServiceClass);
+		
+		Thread moveGripperProviderThread = new Thread(new Revciever(new IDLCaDSEV3RMIMoveGripperSkeleton(gripper),3232));
 		moveGripperProviderThread.start();
 		moveGripperProviderThread.join();
 	}

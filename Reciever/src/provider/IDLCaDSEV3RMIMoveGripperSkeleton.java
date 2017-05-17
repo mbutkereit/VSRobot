@@ -9,9 +9,8 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 
-import org.cads.ev3.middleware.CaDSEV3RobotStudentImplementation;
-import org.cads.ev3.middleware.CaDSEV3RobotType;
-import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveGripper;
+import interfaces.InterfaceIDLCaDSEV3RMIMoveGripper;
+import utilities.ParameterParser;
 
 /**
  * Die Klasse ist verantwortlich für das Unmarshalling.
@@ -57,13 +56,13 @@ public class IDLCaDSEV3RMIMoveGripperSkeleton implements InterfaceSkeleton {
 				
 				switch (methodName) {
 				  case "openGripper": 
-	 int Transaction_ID_openGripper = (Integer)parameterList.get(0L);
+	 int Transaction_ID_openGripper = (Integer)parameterList.get(1L);
 	 
 	 int result_openGripper = this.imp.openGripper(Transaction_ID_openGripper);
 	response.add("ReturnValue", result_openGripper);
 	break;
 	case "closeGripper": 
-	 int Transaction_ID_closeGripper = (Integer)parameterList.get(0L);
+	 int Transaction_ID_closeGripper = (Integer)parameterList.get(1L);
 	 
 	 int result_closeGripper = this.imp.closeGripper(Transaction_ID_closeGripper);
 	response.add("ReturnValue", result_closeGripper);

@@ -9,9 +9,7 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 
-import org.cads.ev3.middleware.CaDSEV3RobotStudentImplementation;
-import org.cads.ev3.middleware.CaDSEV3RobotType;
-import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveGripper;
+import utilities.ParameterParser;
 
 /**
  * Die Klasse ist verantwortlich für das Unmarshalling.
@@ -19,27 +17,20 @@ import org.cads.ev3.rmi.generated.cadSRMIInterface.IIDLCaDSEV3RMIMoveGripper;
  * @author wilhelm
  *
  */
-public class %s {
+public class %s implements InterfaceSkeleton {
 
-	private final static String ServiceClass = "%s";
+	public final static String ServiceClass = "%s";
 	
+	
+	
+	private %s imp;
+
 	/**
 	 * Konstruktor
 	 * 
-	 * @param fifo
 	 */
-	public %s(FifoQueue fifo) {
-		this.fifo = fifo;
-		factory = Json.createBuilderFactory(null);
-		builder = factory.createObjectBuilder();
-
-		stubinterface = null;
-		try {
-			stubinterface = Class.forName("client.%s");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public %s(%s imp) {
+		this.imp = imp;
 	}
 
 
@@ -53,39 +44,17 @@ public class %s {
 				JsonReader rdr = Json.createReader(is)) {
 
 			JsonObject obj = rdr.readObject();
-
 			String className = obj.getString("ObjectName");
-			
 			String methodName = obj.getString("FunctionName");
 
-			if (!(className.equals(MoveGripperSkeleton.ServiceClass))) {
+			if (!(className.equals(%s.ServiceClass))) {
 				throw new Exception("Class not found.");
 			} else {
 				
-				Map<Long, Integer> parameterList = parser.parse(obj);
-				int param1 = 0;
-				int result = 0;
+				Map<Long, Object> parameterList = parser.parse(obj);
 				
 				switch (methodName) {
-				case "closeGripper":
-
-					param1 = ((Integer) parameterList.get(Long.valueOf(0L)))
-							.intValue();
-
-					result = this.getImplementation().closeGripper(param1);
-
-					break;
-				case "openGripper":
-					
-					param1 = ((Integer) parameterList.get(Long.valueOf(0L)))
-							.intValue();
-					result = this.getImplementation().openGripper(param1);
-					break;
-				case "isGripperClosed":
-
-					result = this.getImplementation().isGripperClosed();
-					response.add("ReturnValue", "" + result);
-					break;
+				  %s
 				default:
 					throw new Exception("[ERROR] Function not supported ");
 
@@ -99,6 +68,4 @@ public class %s {
 		return response.build();
 	}
 	
-	
-	%s
 }

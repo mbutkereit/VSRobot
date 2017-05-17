@@ -71,8 +71,8 @@ public class SkeletonGenerator {
 		System.out.println(
 				"::: read plaintext stub from file: " + fileName + " :::");
 
-		String plainTextStub = FileManager.readEntirefile(fileName);
-		System.out.println(plainTextStub);
+		String plainTextSkeleton = FileManager.readEntirefile(fileName);
+		System.out.println(plainTextSkeleton);
 
 		// Read Plain Text Methoden
 		System.out.println();
@@ -85,6 +85,7 @@ public class SkeletonGenerator {
 
 		// Create Methode Strings and Class String
 		StringBuffer parametersBuffer;
+		StringBuffer executeParametsBuffer;
 		StringBuffer methodesBuffer = new StringBuffer();
 
 		for (String methodeName : methodeNames) {
@@ -125,16 +126,81 @@ public class SkeletonGenerator {
 			methodesBuffer.append(String.format(plainTextMethode, returnType,
 					methodeName, parametersBuffer.toString(),methodeName, returnStatement));
 		}
+		
+		// Switch case
+		StringBuffer methodSelectBuffer = new StringBuffer();
+
+		for (String methodeName : methodeNames) {
+			parametersBuffer = new StringBuffer();
+			executeParametsBuffer = new StringBuffer();
+			
+			Map<Integer, Map<String, String>> parameterPositionMap = methodeParameterMap
+					.get(methodeName);
+			int i = 1;
+			Map<String, String> parameter = parameterPositionMap
+					.get(new Integer(i++));
+            int q = 1;
+			while (parameter != null) {
+				if (i > 2) {
+					executeParametsBuffer.append(", ");
+				}
+				
+				executeParametsBuffer.append(parameter.get("name")+"_"+methodeName);
+				
+				parametersBuffer.append(parameter.get("type"));
+				parametersBuffer.append(" ");
+				parametersBuffer.append(parameter.get("name"));
+				parametersBuffer.append("_"+methodeName+" = ");
+				switch (parameter.get("type")) {
+				case "int":
+					parametersBuffer.append("(Integer)parameterList.get("+q+"L);");
+					break;
+				case "long":
+					parametersBuffer.append("(Long)parameterList.get("+q+"L);");
+					break;
+				case "String":
+					parametersBuffer.append("(String)parameterList.get("+q+"L);");
+					break;
+				}
+				parametersBuffer.append("\n\t");
+				parameter = parameterPositionMap.get(new Integer(i++));
+				q++;
+			}
+			String returnType = methodeReturnMap.get(methodeName);
+			String returnStatement = "";
+
+			// Here every supported return type has to be listed
+			switch (returnType) {
+			case "int":
+				returnStatement = "response.add(\"ReturnValue\", %s);";
+				break;
+			case "long":
+				returnStatement = "response.add(\"ReturnValue\", %s);";
+				break;
+			case "String":
+				returnStatement = "response.add(\"ReturnValue\", %s);";
+				break;
+			}
+
+			methodSelectBuffer.append(String.format(
+					"case \"%s\": \n\t %s \n\t %s result_%s = this.imp.%s(%s);\n\t" + returnStatement + "\n\tbreak;\n\t",
+					methodeName,parametersBuffer.toString(), returnType, methodeName, methodeName, executeParametsBuffer.toString(),
+					("result_" + methodeName)));
+		}
 
 		// Generate Methode and Class Strings
 		System.out.println("::: Generate the class files :::");
 
 		System.out.println("Now generating : " + objectName
 				+ "Skeleton" + ".java");
-		String interfaceString = String.format(plainTextStub,
-				(objectName + "Skeleton"), ("Interface" + objectName),
-				(objectName + "Skeleton"), ("Interface" + objectName),
-				methodesBuffer.toString());
+		String interfaceString = String.format(plainTextSkeleton,
+				(objectName + "Skeleton"),
+				("Interface" + objectName),
+				("Interface" + objectName),
+				(objectName + "Skeleton"), 
+				("Interface" + objectName),
+				(objectName + "Skeleton"), 
+				methodSelectBuffer.toString());
 
 		FileManager.writeToFile(objectName+"Skeleton", interfaceString);
 

@@ -1,0 +1,48 @@
+{
+	"ObjectName": "IDLCaDSEV3RMINameserverRegistration",
+	"Functions": [
+		{
+			"Function_Name": "registerService",
+			"Returntype": "int",
+			"Parameter": [
+				{
+					"position": 1,
+					"type": "String",
+					"name": "serviceName"
+				},
+        {
+          "position": 2,
+          "type": "String",
+          "name": "ip"
+        },
+        {
+          "position": 3,
+          "type": "int",
+          "name": "port"
+        }
+			]
+		},
+		{
+			"Function_Name": "unregisterService",
+			"Returntype":"int",
+			"Parameter": [
+				{
+					"position": 1,
+					"type": "int",
+					"name": "serviceName"
+				}
+			]
+		},
+		{
+			"Function_Name": "lookup",
+			"Returntype":"String",
+			"Parameter": [
+        {
+          "position": 1,
+          "type": "String",
+          "name": "serviceName"
+        }
+      ]
+		}
+	]
+}

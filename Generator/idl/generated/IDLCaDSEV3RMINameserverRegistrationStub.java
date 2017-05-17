@@ -12,7 +12,7 @@ import javax.json.JsonArrayBuilder;
  * @author wilhelm
  *
  */
-public class IIDLCaDSEV3RMIMoveVerticalStub implements InterfaceIIDLCaDSEV3RMIMoveVertical {
+public class IDLCaDSEV3RMINameserverRegistrationStub implements InterfaceIDLCaDSEV3RMINameserverRegistration {
 
 	/**
 	 * Eine Queue für die JsonDokumente.
@@ -39,25 +39,25 @@ public class IIDLCaDSEV3RMIMoveVerticalStub implements InterfaceIIDLCaDSEV3RMIMo
 	 * 
 	 * @param fifo
 	 */
-	public IIDLCaDSEV3RMIMoveVerticalStub(FifoQueue fifo) {
+	public IDLCaDSEV3RMINameserverRegistrationStub(FifoQueue fifo) {
 		this.fifo = fifo;
 		factory = Json.createBuilderFactory(null);
 		builder = factory.createObjectBuilder();
 
 		stubinterface = null;
 		try {
-			stubinterface = Class.forName("client.InterfaceIIDLCaDSEV3RMIMoveVertical");
+			stubinterface = Class.forName("client.InterfaceIDLCaDSEV3RMINameserverRegistration");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	    public int moveVerticalToPercent(int paramInt1, int paramInt2) {
+	    public int registerService(String serviceName, String ip, int port) {
     
-		builder.add("FunctionName", "moveVerticalToPercent").add("Type", "Request");
+		builder.add("FunctionName", "registerService").add("Type", "Request");
 		JsonArrayBuilder abuilder = Json.createArrayBuilder();
-		abuilder.add(factory.createObjectBuilder().add("position",1).add("type","int").add("value", paramInt1));abuilder.add(factory.createObjectBuilder().add("position",2).add("type","int").add("value", paramInt2));
+		abuilder.add(factory.createObjectBuilder().add("position",1).add("type","String").add("value", serviceName));abuilder.add(factory.createObjectBuilder().add("position",2).add("type","String").add("value", ip));abuilder.add(factory.createObjectBuilder().add("position",3).add("type","int").add("value", port));
 		builder.add("Parameter", abuilder);
 		builder.add("ObjectName", stubinterface.getSimpleName());
 		JsonObject object = builder.build();
@@ -69,11 +69,11 @@ public class IIDLCaDSEV3RMIMoveVerticalStub implements InterfaceIIDLCaDSEV3RMIMo
     
     
     
-    public int stop(int paramInt) {
+    public int unregisterService(int serviceName) {
     
-		builder.add("FunctionName", "stop").add("Type", "Request");
+		builder.add("FunctionName", "unregisterService").add("Type", "Request");
 		JsonArrayBuilder abuilder = Json.createArrayBuilder();
-		abuilder.add(factory.createObjectBuilder().add("position",1).add("type","int").add("value", paramInt));
+		abuilder.add(factory.createObjectBuilder().add("position",1).add("type","int").add("value", serviceName));
 		builder.add("Parameter", abuilder);
 		builder.add("ObjectName", stubinterface.getSimpleName());
 		JsonObject object = builder.build();
@@ -85,18 +85,18 @@ public class IIDLCaDSEV3RMIMoveVerticalStub implements InterfaceIIDLCaDSEV3RMIMo
     
     
     
-    public int getCurrentVerticalPercent() {
+    public String lookup(String serviceName) {
     
-		builder.add("FunctionName", "getCurrentVerticalPercent").add("Type", "Request");
+		builder.add("FunctionName", "lookup").add("Type", "Request");
 		JsonArrayBuilder abuilder = Json.createArrayBuilder();
-		
+		abuilder.add(factory.createObjectBuilder().add("position",1).add("type","String").add("value", serviceName));
 		builder.add("Parameter", abuilder);
 		builder.add("ObjectName", stubinterface.getSimpleName());
 		JsonObject object = builder.build();
 		System.out
 				.println("Objekt in die Queue gelegt: \n" + object.toString());
 		fifo.enque(object);
-		return 0;
+		return null;
     }
     
     
