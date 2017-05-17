@@ -61,7 +61,11 @@ public class Reciever extends Thread {
 	public Reciever(FifoQueue queue) {
 		this.queue = queue;
 		try {
+<<<<<<< HEAD:Client/src/client/Reciever.java
 			recieveSocket = new DatagramSocket(Sender.PORTNUMMERRECIEVER);
+=======
+			recieveSocket = new DatagramSocket(9092);
+>>>>>>> 2b40b5eeb0b1c4ad458d298959205ccd74551c56:Reciever/src/client/Reciever.java
 		} catch (SocketException e) {
 			System.err.println(
 					"Fehler beim Erstellen eines Sockets beim Reciever.");

@@ -1,15 +1,17 @@
 package management;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 import org.cads.ev3.middleware.CaDSEV3RobotStudentImplementation;
 import org.cads.ev3.middleware.CaDSEV3RobotType;
 
+import client.FifoQueue;
+import client.Reciever;
+import client.Sender;
 import implementation.IIDLCaDSEV3RMIMoveHorizontalImplementation;
 import implementation.IIDLCaDSEV3RMIMoveVerticalImplementation;
 import implementation.IIDLCaDSEV3RMIUltraSonicImplementation;
 import interfaces.InterfaceIDLCaDSEV3RMIMoveGripper;
+import interfaces.InterfaceIDLCaDSEV3RMINameserverRegistration;
 import others.RobotMoveGripperFactory;
 import others.RobotStatusManager;
 import provider.IDLCaDSEV3RMIMoveGripperSkeleton;
@@ -17,26 +19,51 @@ import provider.IIDLCaDSEV3RMIMoveHorizontalSkeleton;
 import provider.IIDLCaDSEV3RMIMoveVerticalSkeleton;
 import provider.IIDLCaDSEV3RMIUltraSonicSkeleton;
 import provider.Revciever;
+import stubs.IDLCaDSEV3RMINameserverRegistrationStub;
 
 public class RecieverManager {
 
 	public static void main(String[] args) throws InterruptedException {
 
 		if (args.length == 3) {
-			String namespace = args[1];
+			String namespace = args[0];
+			String ip = null;
+			int port = -1;
 			try {
-				InetAddress ia = InetAddress.getByName(args[2]);
-			} catch (UnknownHostException e) {
-				System.err.println("Unknown Host.");
-				e.printStackTrace();
-			}
-			try {
-				int port = Integer.parseInt(args[2]);
+				ip = args[1];
 			} catch (Exception e) {
 				System.err.println("Unknown Host.");
 				e.printStackTrace();
 			}
+			try {
+				port = Integer.parseInt(args[2]);
+			} catch (Exception e) {
+				System.err.println("Unknown Host.");
+				e.printStackTrace();
+			}
+			
+			// Logik
+			FifoQueue sendQueue = new FifoQueue();
+			FifoQueue recieveQueue = new FifoQueue();
+
+			// Reciever
+			Reciever reciever = new Reciever(recieveQueue);
+
+			// Startet den Sender um Nachrichten an den Server zu schicken
+			Sender sender = new Sender(sendQueue, reciever);
+
+			reciever.start();
+			sender.start();
+			
+			InterfaceIDLCaDSEV3RMINameserverRegistration stub = new IDLCaDSEV3RMINameserverRegistrationStub(sendQueue);
+			
+			stub.registerService(namespace+"."+ "InterfaceIDLCaDSEV3RMIMoveGripperSkeleton", ip, 3232);
+			stub.registerService(namespace+"."+ "InterfaceIIDLCaDSEV3RMIMoveHorizontalSkeleton", ip, 3233);
+			stub.registerService(namespace+"."+ "InterfaceIIDLCaDSEV3RMIMoveVerticalSkeleton", ip, 3234);
+			stub.registerService(namespace+"."+ "InterfaceIIDLCaDSEV3RMIUltraSonic", ip, 3235);
 		}
+		
+		
 		
 		// Get Roboter.
 		RobotStatusManager manager = new RobotStatusManager();
