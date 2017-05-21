@@ -41,9 +41,12 @@ public class IDLCaDSEV3RMINameserverRegistrationSkeleton implements InterfaceFor
 		try (InputStream is = new ByteArrayInputStream(buffer, 0, length); JsonReader rdr = Json.createReader(is)) {
 
 			JsonObject obj = rdr.readObject();
-			String className = obj.getString("ObjectName");
+			String objektname = obj.getString("ObjectName");
+			String className = objektname.split("\\.")[1];
 			String methodName = obj.getString("FunctionName");
-
+			response.add("ObjectName",objektname);
+			response.add("FunctionName",methodName);
+			System.out.println("Handle startet");
 			if (!(className.equals(IDLCaDSEV3RMINameserverRegistrationSkeleton.ServiceClass))) {
 				throw new Exception("Class not found.");
 			} else {

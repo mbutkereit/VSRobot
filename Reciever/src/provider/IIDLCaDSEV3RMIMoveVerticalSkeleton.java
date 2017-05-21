@@ -21,19 +21,17 @@ import utilities.ParameterParser;
 public class IIDLCaDSEV3RMIMoveVerticalSkeleton implements InterfaceSkeleton {
 
 	public final static String ServiceClass = "InterfaceIIDLCaDSEV3RMIMoveVertical";
-	
-	
-	
+
 	private InterfaceIIDLCaDSEV3RMIMoveVertical imp;
 
 	/**
 	 * Konstruktor
 	 * 
 	 */
-	public IIDLCaDSEV3RMIMoveVerticalSkeleton(InterfaceIIDLCaDSEV3RMIMoveVertical imp) {
+	public IIDLCaDSEV3RMIMoveVerticalSkeleton(
+			InterfaceIIDLCaDSEV3RMIMoveVertical imp) {
 		this.imp = imp;
 	}
-
 
 	public JsonObject handle(byte[] buffer, int length) {
 		ParameterParser parser = new ParameterParser();
@@ -45,35 +43,46 @@ public class IIDLCaDSEV3RMIMoveVerticalSkeleton implements InterfaceSkeleton {
 				JsonReader rdr = Json.createReader(is)) {
 
 			JsonObject obj = rdr.readObject();
-			String className = obj.getString("ObjectName");
+			String objektname = obj.getString("ObjectName");
+			String className = objektname.split(".")[1];
 			String methodName = obj.getString("FunctionName");
+			response.add("ObjectName",objektname);
+			response.add("FunctionName",methodName);
 
-			if (!(className.equals(IIDLCaDSEV3RMIMoveVerticalSkeleton.ServiceClass))) {
+			if (!(className
+					.equals(IIDLCaDSEV3RMIMoveVerticalSkeleton.ServiceClass))) {
 				throw new Exception("Class not found.");
 			} else {
-				
+
 				Map<Long, Object> parameterList = parser.parse(obj);
-				
+
 				switch (methodName) {
-				  case "moveVerticalToPercent": 
-	 int paramInt1_moveVerticalToPercent = (Integer)parameterList.get(1L);
-	int paramInt2_moveVerticalToPercent = (Integer)parameterList.get(2L);
-	 
-	 int result_moveVerticalToPercent = this.imp.moveVerticalToPercent(paramInt1_moveVerticalToPercent, paramInt2_moveVerticalToPercent);
-	response.add("ReturnValue", result_moveVerticalToPercent);
-	break;
-	case "stop": 
-	 int paramInt_stop = (Integer)parameterList.get(1L);
-	 
-	 int result_stop = this.imp.stop(paramInt_stop);
-	response.add("ReturnValue", result_stop);
-	break;
-	case "getCurrentVerticalPercent": 
-	  
-	 int result_getCurrentVerticalPercent = this.imp.getCurrentVerticalPercent();
-	response.add("ReturnValue", result_getCurrentVerticalPercent);
-	break;
-	
+				case "moveVerticalToPercent":
+					int paramInt1_moveVerticalToPercent = (Integer) parameterList
+							.get(1L);
+					int paramInt2_moveVerticalToPercent = (Integer) parameterList
+							.get(2L);
+
+					int result_moveVerticalToPercent = this.imp
+							.moveVerticalToPercent(
+									paramInt1_moveVerticalToPercent,
+									paramInt2_moveVerticalToPercent);
+					response.add("ReturnValue", result_moveVerticalToPercent);
+					break;
+				case "stop":
+					int paramInt_stop = (Integer) parameterList.get(1L);
+
+					int result_stop = this.imp.stop(paramInt_stop);
+					response.add("ReturnValue", result_stop);
+					break;
+				case "getCurrentVerticalPercent":
+
+					int result_getCurrentVerticalPercent = this.imp
+							.getCurrentVerticalPercent();
+					response.add("ReturnValue",
+							result_getCurrentVerticalPercent);
+					break;
+
 				default:
 					throw new Exception("[ERROR] Function not supported ");
 
@@ -86,5 +95,5 @@ public class IIDLCaDSEV3RMIMoveVerticalSkeleton implements InterfaceSkeleton {
 
 		return response.build();
 	}
-	
+
 }

@@ -25,6 +25,7 @@ public class Forwarder implements InterfaceForwarder {
 
 		try (InputStream is = new ByteArrayInputStream(buffer, 0, length); JsonReader rdr = Json.createReader(is)) {
 			JsonObject obj = rdr.readObject();
+			System.out.println(obj.toString());
 			String className = obj.getString("ObjectName");
 			String methodName = obj.getString("FunctionName");
 			
@@ -32,6 +33,7 @@ public class Forwarder implements InterfaceForwarder {
 			DatagramSocket dsocket = new DatagramSocket();
 			boolean answerRecieved = false;
 			DatagramPacket recieve_packet = null;
+			byte[] receiveData = new byte[2048];
 			
 			// Laden des Services
 			int port = list.getPortFromService(className);
@@ -43,8 +45,9 @@ public class Forwarder implements InterfaceForwarder {
 			byte[] data = obj.toString().getBytes();
 			DatagramPacket send_packet = new DatagramPacket(data, data.length, ip, port);
 			dsocket.send(send_packet);
-			dsocket.setSoTimeout(2000);
+			dsocket.setSoTimeout(500);
 
+			recieve_packet= new DatagramPacket(receiveData, receiveData.length);
 			answerRecieved = false;
 			int versuche = 0;
 			while (!(answerRecieved) && versuche < 5) {
@@ -53,11 +56,11 @@ public class Forwarder implements InterfaceForwarder {
 					answerRecieved = true;
 					byte[] data_response = response.toString().getBytes();
 					DatagramPacket response_packet = new DatagramPacket(data_response, data_response.length, ip, port);
-					dsocket.send(send_packet);
+				//	dsocket.send(send_packet);
 				} catch (SocketTimeoutException e) {
 					System.err.println("Timeout: Versuche die Nachricht noch einmal zu �bertragen");
 					versuche++;
-					dsocket.send(recieve_packet);
+					dsocket.send(send_packet);
 					System.out.println("Paket erneut gesendet");
 				}
 			}

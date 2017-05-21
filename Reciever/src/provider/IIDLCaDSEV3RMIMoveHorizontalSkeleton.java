@@ -21,19 +21,17 @@ import utilities.ParameterParser;
 public class IIDLCaDSEV3RMIMoveHorizontalSkeleton implements InterfaceSkeleton {
 
 	public final static String ServiceClass = "InterfaceIIDLCaDSEV3RMIMoveHorizontal";
-	
-	
-	
+
 	private InterfaceIIDLCaDSEV3RMIMoveHorizontal imp;
 
 	/**
 	 * Konstruktor
 	 * 
 	 */
-	public IIDLCaDSEV3RMIMoveHorizontalSkeleton(InterfaceIIDLCaDSEV3RMIMoveHorizontal imp) {
+	public IIDLCaDSEV3RMIMoveHorizontalSkeleton(
+			InterfaceIIDLCaDSEV3RMIMoveHorizontal imp) {
 		this.imp = imp;
 	}
-
 
 	public JsonObject handle(byte[] buffer, int length) {
 		ParameterParser parser = new ParameterParser();
@@ -43,37 +41,48 @@ public class IIDLCaDSEV3RMIMoveHorizontalSkeleton implements InterfaceSkeleton {
 
 		try (InputStream is = new ByteArrayInputStream(buffer, 0, length);
 				JsonReader rdr = Json.createReader(is)) {
-
+			
 			JsonObject obj = rdr.readObject();
-			String className = obj.getString("ObjectName");
+			String objektname = obj.getString("ObjectName");
+			String className = objektname.split(".")[1];
 			String methodName = obj.getString("FunctionName");
+			response.add("ObjectName",objektname);
+			response.add("FunctionName",methodName);
 
-			if (!(className.equals(IIDLCaDSEV3RMIMoveHorizontalSkeleton.ServiceClass))) {
+			if (!(className.equals(
+					IIDLCaDSEV3RMIMoveHorizontalSkeleton.ServiceClass))) {
 				throw new Exception("Class not found.");
 			} else {
-				
+
 				Map<Long, Object> parameterList = parser.parse(obj);
-				
+
 				switch (methodName) {
-				  case "moveHorizontalToPercent": 
-	 int paramInt1_moveHorizontalToPercent = (Integer)parameterList.get(1L);
-	int paramInt2_moveHorizontalToPercent = (Integer)parameterList.get(2L);
-	 
-	 int result_moveHorizontalToPercent = this.imp.moveHorizontalToPercent(paramInt1_moveHorizontalToPercent, paramInt2_moveHorizontalToPercent);
-	response.add("ReturnValue", result_moveHorizontalToPercent);
-	break;
-	case "stop": 
-	 int paramInt_stop = (Integer)parameterList.get(1L);
-	 
-	 int result_stop = this.imp.stop(paramInt_stop);
-	response.add("ReturnValue", result_stop);
-	break;
-	case "getCurrentHorizontalPercent": 
-	  
-	 int result_getCurrentHorizontalPercent = this.imp.getCurrentHorizontalPercent();
-	response.add("ReturnValue", result_getCurrentHorizontalPercent);
-	break;
-	
+				case "moveHorizontalToPercent":
+					int paramInt1_moveHorizontalToPercent = (Integer) parameterList
+							.get(1L);
+					int paramInt2_moveHorizontalToPercent = (Integer) parameterList
+							.get(2L);
+
+					int result_moveHorizontalToPercent = this.imp
+							.moveHorizontalToPercent(
+									paramInt1_moveHorizontalToPercent,
+									paramInt2_moveHorizontalToPercent);
+					response.add("ReturnValue", result_moveHorizontalToPercent);
+					break;
+				case "stop":
+					int paramInt_stop = (Integer) parameterList.get(1L);
+
+					int result_stop = this.imp.stop(paramInt_stop);
+					response.add("ReturnValue", result_stop);
+					break;
+				case "getCurrentHorizontalPercent":
+
+					int result_getCurrentHorizontalPercent = this.imp
+							.getCurrentHorizontalPercent();
+					response.add("ReturnValue",
+							result_getCurrentHorizontalPercent);
+					break;
+
 				default:
 					throw new Exception("[ERROR] Function not supported ");
 
@@ -86,5 +95,5 @@ public class IIDLCaDSEV3RMIMoveHorizontalSkeleton implements InterfaceSkeleton {
 
 		return response.build();
 	}
-	
+
 }

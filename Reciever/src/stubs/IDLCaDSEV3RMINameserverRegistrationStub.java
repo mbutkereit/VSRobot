@@ -5,8 +5,9 @@ import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
-import client.FifoQueue;
+import consumer.FifoQueue;
 import interfaces.InterfaceIDLCaDSEV3RMINameserverRegistration;
+import management.RecieverManager;
 
 import javax.json.JsonArrayBuilder;
 
@@ -63,7 +64,7 @@ public class IDLCaDSEV3RMINameserverRegistrationStub implements InterfaceIDLCaDS
 		JsonArrayBuilder abuilder = Json.createArrayBuilder();
 		abuilder.add(factory.createObjectBuilder().add("position",1).add("type","String").add("value", serviceName));abuilder.add(factory.createObjectBuilder().add("position",2).add("type","String").add("value", ip));abuilder.add(factory.createObjectBuilder().add("position",3).add("type","int").add("value", port));
 		builder.add("Parameter", abuilder);
-		builder.add("ObjectName", stubinterface.getSimpleName());
+		builder.add("ObjectName", RecieverManager.namespace+"."+stubinterface.getSimpleName());
 		JsonObject object = builder.build();
 		System.out
 				.println("Objekt in die Queue gelegt: \n" + object.toString());

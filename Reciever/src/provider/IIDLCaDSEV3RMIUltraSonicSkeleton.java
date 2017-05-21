@@ -19,19 +19,17 @@ import interfaces.InterfaceIIDLCaDSEV3RMIUltraSonic;
 public class IIDLCaDSEV3RMIUltraSonicSkeleton implements InterfaceSkeleton {
 
 	public final static String ServiceClass = "InterfaceIIDLCaDSEV3RMIUltraSonic";
-	
-	
-	
+
 	private InterfaceIIDLCaDSEV3RMIUltraSonic imp;
 
 	/**
 	 * Konstruktor
 	 * 
 	 */
-	public IIDLCaDSEV3RMIUltraSonicSkeleton(InterfaceIIDLCaDSEV3RMIUltraSonic imp) {
+	public IIDLCaDSEV3RMIUltraSonicSkeleton(
+			InterfaceIIDLCaDSEV3RMIUltraSonic imp) {
 		this.imp = imp;
 	}
-
 
 	public JsonObject handle(byte[] buffer, int length) {
 
@@ -42,20 +40,25 @@ public class IIDLCaDSEV3RMIUltraSonicSkeleton implements InterfaceSkeleton {
 				JsonReader rdr = Json.createReader(is)) {
 
 			JsonObject obj = rdr.readObject();
-			String className = obj.getString("ObjectName");
+			String objektname = obj.getString("ObjectName");
+			String className = objektname.split(".")[1];
 			String methodName = obj.getString("FunctionName");
+			response.add("ObjectName",objektname);
+			response.add("FunctionName",methodName);
 
-			if (!(className.equals(IIDLCaDSEV3RMIUltraSonicSkeleton.ServiceClass))) {
+			if (!(className
+					.equals(IIDLCaDSEV3RMIUltraSonicSkeleton.ServiceClass))) {
 				throw new Exception("Class not found.");
 			} else {
-				
+
 				switch (methodName) {
-				  case "isUltraSonicOccupied": 
-	  
-	 int result_isUltraSonicOccupied = this.imp.isUltraSonicOccupied();
-	response.add("ReturnValue", result_isUltraSonicOccupied);
-	break;
-	
+				case "isUltraSonicOccupied":
+
+					int result_isUltraSonicOccupied = this.imp
+							.isUltraSonicOccupied();
+					response.add("ReturnValue", result_isUltraSonicOccupied);
+					break;
+
 				default:
 					throw new Exception("[ERROR] Function not supported ");
 
@@ -68,5 +71,5 @@ public class IIDLCaDSEV3RMIUltraSonicSkeleton implements InterfaceSkeleton {
 
 		return response.build();
 	}
-	
+
 }

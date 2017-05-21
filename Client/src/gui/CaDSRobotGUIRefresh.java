@@ -1,8 +1,8 @@
 package gui;
 
 import java.util.concurrent.TimeUnit;
-import client.Controller;
-import client.ICaDSRMIConsumer;
+
+import consumer.Controller;
 
 
 public class CaDSRobotGUIRefresh

@@ -1,4 +1,6 @@
-/client/
-/generator/
 /alteFiles/
+/consumer/
+/dienste/
 /gui/
+/stubInterfaces/
+/stubs/

@@ -72,7 +72,7 @@ public class Receiver implements Runnable {
 			while (true) {
 				dsocket.receive(packet);
 				
-				System.out.println("New Packet:");
+				System.out.println("New Packet:"+port);
 				JsonObject response = this.forwarder.handle(buffer, packet.getLength());
 				System.out.println(response.toString());
 
@@ -80,6 +80,7 @@ public class Receiver implements Runnable {
 				
 				byte[] data = response.toString().getBytes();
 				DatagramPacket send_packet = new DatagramPacket(data, data.length, packet.getAddress(),packet.getPort());
+				System.out.println("ich sende jetzt ein Paket.");
 				dsocket.send(send_packet);
 			}
 			

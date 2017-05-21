@@ -6,7 +6,7 @@ import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
-import client.FifoQueue;
+import consumer.FifoQueue;
 
 /**
  * Die Klasse ist verantwortlich für das Marshalling.

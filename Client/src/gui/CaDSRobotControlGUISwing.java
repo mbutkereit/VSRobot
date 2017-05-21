@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.JSlider;
-import client.ICaDSRMIConsumer;
+
 import dienste.IIDLCaDSEV3RMIMoveGripper;
 import dienste.IIDLCaDSEV3RMIMoveHorizontal;
 import dienste.IIDLCaDSEV3RMIMoveVertical;
@@ -48,7 +48,7 @@ public class CaDSRobotControlGUISwing
       {
         try
         {
-          CaDSRobotGUISwing localCaDSRobotGUISwing = new CaDSRobotGUISwing(null, null, null, null, null,null);
+          CaDSRobotGUISwing localCaDSRobotGUISwing = new CaDSRobotGUISwing(null, null, null, null, null);
         }
         catch (Exception localException)
         {
