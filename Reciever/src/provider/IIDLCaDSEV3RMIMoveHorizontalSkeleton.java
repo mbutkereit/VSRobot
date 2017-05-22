@@ -20,7 +20,7 @@ import utilities.ParameterParser;
  */
 public class IIDLCaDSEV3RMIMoveHorizontalSkeleton implements InterfaceSkeleton {
 
-	public final static String ServiceClass = "InterfaceIIDLCaDSEV3RMIMoveHorizontal";
+	public final static String ServiceClass = "InterfaceIDLCaDSEV3RMIMoveHorizontal";
 
 	private InterfaceIIDLCaDSEV3RMIMoveHorizontal imp;
 
@@ -44,7 +44,7 @@ public class IIDLCaDSEV3RMIMoveHorizontalSkeleton implements InterfaceSkeleton {
 			
 			JsonObject obj = rdr.readObject();
 			String objektname = obj.getString("ObjectName");
-			String className = objektname.split(".")[1];
+			String className = objektname.split("\\.")[1];
 			String methodName = obj.getString("FunctionName");
 			response.add("ObjectName",objektname);
 			response.add("FunctionName",methodName);

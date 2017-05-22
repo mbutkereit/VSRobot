@@ -21,7 +21,14 @@ public class IIDLCaDSEV3RMIMoveVerticalImplementation implements InterfaceIIDLCa
 	}
 
     public int moveVerticalToPercent(int paramInt1, int paramInt2) {
-    	call.moveDown();
+    	if(percent==50){
+    	 	call.moveUp();
+    	 	percent=51;
+    	}else{
+    		call.moveDown();
+    		percent=50;
+    	}
+   
 		return 0;
     }
     

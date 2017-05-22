@@ -36,6 +36,7 @@ public class Revciever implements Runnable {
 			DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 			
 			while (true) {
+				System.out.println("Sokcet:::::::::"+dsocket.getLocalPort());
 				dsocket.receive(packet);
 				
 				System.out.println("New Packet:");
@@ -50,6 +51,7 @@ public class Revciever implements Runnable {
 			}
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.err.println(e);
 		}
 		

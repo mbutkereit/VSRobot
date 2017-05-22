@@ -44,21 +44,21 @@ public class Nameserver {
 				9091));
 		nameserverRegistrationThread.start();
 
-//		UserList list = UserList.getInstance();
-//		NanoWSD ws = new DebugWebSocketServer(8042, list);
-//		ws.start();
-//		LebensChecker life = new LebensChecker(list);
-//		Thread threadLife = new Thread(life);
-//		threadLife.start();
-//		System.out.println("Server started, hit Enter to stop.\n");
-//		try {
-//			System.in.read();
-//		} catch (IOException ignored) {
-//		}
-//		
-//		forwarderProviderThread.join();
-//		ws.stop();
-//		System.out.println("Server stopped.\n");
+		UserList list = UserList.getInstance();
+		NanoWSD ws = new DebugWebSocketServer(8042, list);
+		ws.start();
+		LebensChecker life = new LebensChecker(list);
+		Thread threadLife = new Thread(life);
+		threadLife.start();
+		System.out.println("Server started, hit Enter to stop.\n");
+		try {
+			System.in.read();
+		} catch (IOException ignored) {
+		}
+		
+		forwarderProviderThread.join();
+		ws.stop();
+		System.out.println("Server stopped.\n");
 	}
 
 }

@@ -130,7 +130,7 @@ public class KommunikationsThread extends Thread {
 			packet = new DatagramPacket(data, data.length);
 
 			try {
-				socket.setSoTimeout(4000);
+				socket.setSoTimeout(20000);
 				while (versuche < 5 && answerReceived == false) {
 					try {
 						socket.receive(packet);

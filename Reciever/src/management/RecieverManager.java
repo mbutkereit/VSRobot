@@ -64,64 +64,49 @@ public class RecieverManager {
 			// Logik
 			FifoQueue sendQueue = new FifoQueue();
 			FifoQueue recieveQueue = new FifoQueue();
-			
-			KommunikationsThread thread = new KommunikationsThread(sendQueue, recieveQueue);
-			thread.start();
-		
 
+			KommunikationsThread thread = new KommunikationsThread(sendQueue,
+					recieveQueue);
+			thread.start();
 
 			InterfaceIDLCaDSEV3RMINameserverRegistration stub = new IDLCaDSEV3RMINameserverRegistrationStub(
 					sendQueue);
 			stub.registerService(
-					namespace + "."
-							+ "InterfaceIDLCaDSEV3RMIMoveGripperSkeleton",
-					ip, 3232);
+					namespace + "." + "InterfaceIDLCaDSEV3RMIMoveGripper", ip,
+					3232);
 			stub.registerService(
-					namespace + "."
-							+ "InterfaceIIDLCaDSEV3RMIMoveHorizontalSkeleton",
+					namespace + "." + "InterfaceIDLCaDSEV3RMIMoveHorizontal",
 					ip, 3233);
 			stub.registerService(
-					namespace + "."
-							+ "InterfaceIIDLCaDSEV3RMIMoveVerticalSkeleton",
-					ip, 3234);
+					namespace + "." + "InterfaceIDLCaDSEV3RMIMoveVertical", ip,
+					3234);
 			stub.registerService(
-					namespace + "." + "InterfaceIIDLCaDSEV3RMIUltraSonic", ip,
+					namespace + "." + "InterfaceIDLCaDSEV3RMIUltraSonic", ip,
 					3235);
 			stub.registerService(
-					"robi25" + "."
-							+ "InterfaceIDLCaDSEV3RMIMoveGripperSkeleton",
-					ip, 3232);
+					"robi25" + "." + "InterfaceIDLCaDSEV3RMIMoveGripper", ip,
+					3232);
 			stub.registerService(
-					"robi25" + "."
-							+ "InterfaceIIDLCaDSEV3RMIMoveHorizontalSkeleton",
+					"robi25" + "." + "InterfaceIDLCaDSEV3RMIMoveHorizontal",
 					ip, 3233);
 			stub.registerService(
-					"robi25" + "."
-							+ "InterfaceIIDLCaDSEV3RMIMoveVerticalSkeleton",
-					ip, 3234);
+					"robi25" + "." + "InterfaceIDLCaDSEV3RMIMoveVertical", ip,
+					3234);
 			stub.registerService(
-					"robi25" + "." + "InterfaceIIDLCaDSEV3RMIUltraSonic", ip,
+					"robi25" + "." + "InterfaceIDLCaDSEV3RMIUltraSonic", ip,
 					3235);
 			stub.registerService(
-					"robocop" + "."
-							+ "InterfaceIDLCaDSEV3RMIMoveGripperSkeleton",
-					ip, 3232);
+					"robocop" + "." + "InterfaceIDLCaDSEV3RMIMoveGripper", ip,
+					3232);
 			stub.registerService(
-					"robocop" + "."
-							+ "InterfaceIIDLCaDSEV3RMIMoveHorizontalSkeleton",
+					"robocop" + "." + "InterfaceIDLCaDSEV3RMIMoveHorizontal",
 					ip, 3233);
 			stub.registerService(
-					"robocop" + "."
-							+ "InterfaceIIDLCaDSEV3RMIMoveVerticalSkeleton",
-					ip, 3234);
+					"robocop" + "." + "InterfaceIDLCaDSEV3RMIMoveVertical", ip,
+					3234);
 			stub.registerService(
-					"robocop" + "." + "InterfaceIIDLCaDSEV3RMIUltraSonic", ip,
+					"robocop" + "." + "InterfaceIDLCaDSEV3RMIUltraSonic", ip,
 					3235);
-		}
-		
-		//Nur zum Stoppen Endlosschleife
-		while("".equals("")){
-			
 		}
 
 		// Get Roboter.
