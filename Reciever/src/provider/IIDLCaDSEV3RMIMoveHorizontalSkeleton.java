@@ -10,6 +10,7 @@ import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 
 import interfaces.InterfaceIIDLCaDSEV3RMIMoveHorizontal;
+import management.RecieverManager;
 import utilities.ParameterParser;
 
 /**
@@ -48,6 +49,11 @@ public class IIDLCaDSEV3RMIMoveHorizontalSkeleton implements InterfaceSkeleton {
 			String methodName = obj.getString("FunctionName");
 			response.add("ObjectName",objektname);
 			response.add("FunctionName",methodName);
+			
+			String robotername = objektname.split("\\.")[0];
+			if(robotername.equals(RecieverManager.namespace)== false ){
+				throw new Exception("Wrong Robotname.");
+			}
 
 			if (!(className.equals(
 					IIDLCaDSEV3RMIMoveHorizontalSkeleton.ServiceClass))) {

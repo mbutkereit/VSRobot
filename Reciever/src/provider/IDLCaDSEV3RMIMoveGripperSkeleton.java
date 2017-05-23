@@ -10,6 +10,7 @@ import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 
 import interfaces.InterfaceIDLCaDSEV3RMIMoveGripper;
+import management.RecieverManager;
 import utilities.ParameterParser;
 
 /**
@@ -45,10 +46,15 @@ public class IDLCaDSEV3RMIMoveGripperSkeleton implements InterfaceSkeleton {
 
 			JsonObject obj = rdr.readObject();
 			String objektname = obj.getString("ObjectName");
+			String robotername = objektname.split("\\.")[0];
 			String className = objektname.split("\\.")[1];
 			String methodName = obj.getString("FunctionName");
 			response.add("ObjectName",objektname);
 			response.add("FunctionName",methodName);
+			
+			if(robotername.equals(RecieverManager.namespace) ==false){
+				throw new Exception("Wrong Robotname.");
+			}
 
 			if (!(className
 					.equals(IDLCaDSEV3RMIMoveGripperSkeleton.ServiceClass))) {

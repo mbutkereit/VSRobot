@@ -9,6 +9,7 @@ import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 
 import interfaces.InterfaceIIDLCaDSEV3RMIUltraSonic;
+import management.RecieverManager;
 
 /**
  * Die Klasse ist verantwortlich für das Unmarshalling.
@@ -45,6 +46,11 @@ public class IIDLCaDSEV3RMIUltraSonicSkeleton implements InterfaceSkeleton {
 			String methodName = obj.getString("FunctionName");
 			response.add("ObjectName",objektname);
 			response.add("FunctionName",methodName);
+			
+			String robotername = objektname.split("\\.")[0];
+			if(robotername.equals(RecieverManager.namespace) ==false){
+				throw new Exception("Wrong Robotname.");
+			}
 
 			if (!(className
 					.equals(IIDLCaDSEV3RMIUltraSonicSkeleton.ServiceClass))) {

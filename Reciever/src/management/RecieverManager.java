@@ -1,15 +1,13 @@
 package management;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import org.cads.ev3.middleware.CaDSEV3RobotStudentImplementation;
 import org.cads.ev3.middleware.CaDSEV3RobotType;
 
 import consumer.FifoQueue;
 import consumer.KommunikationsThread;
-import implementation.IIDLCaDSEV3RMIMoveHorizontalImplementation;
-import implementation.IIDLCaDSEV3RMIMoveVerticalImplementation;
-import implementation.IIDLCaDSEV3RMIUltraSonicImplementation;
 import others.RobotImplementationFactory;
 import others.RobotStatusManager;
 import provider.IDLCaDSEV3RMIMoveGripperSkeleton;
@@ -49,18 +47,19 @@ public class RecieverManager {
 	 */
 	public static void main(String[] args) throws InterruptedException {
 
-		// Anmeldung der Dienste beim Nameserver
-		if (args.length == 1) {
+		// Auslesen der Kommandozeilenparameter und Registrierung beim
+		// Nameserver.
+		if (args.length == 3) {
 			namespace = args[0];
-			String ip = null;
+			String ip = args[1];
+			port = Integer.parseInt(args[2]);
 			try {
-				ip = "127.0.0.1";
 				ipAdress = InetAddress.getByName(ip);
-			} catch (Exception e) {
+			} catch (UnknownHostException e) {
 				System.err.println("Unknown Host.");
 				e.printStackTrace();
 			}
-
+			
 			// Logik
 			FifoQueue sendQueue = new FifoQueue();
 			FifoQueue recieveQueue = new FifoQueue();
@@ -73,40 +72,18 @@ public class RecieverManager {
 					sendQueue);
 			stub.registerService(
 					namespace + "." + "InterfaceIDLCaDSEV3RMIMoveGripper", ip,
-					3232);
+					port);
 			stub.registerService(
 					namespace + "." + "InterfaceIDLCaDSEV3RMIMoveHorizontal",
-					ip, 3233);
+					ip, port + 1);
 			stub.registerService(
 					namespace + "." + "InterfaceIDLCaDSEV3RMIMoveVertical", ip,
-					3234);
+					port + 2);
 			stub.registerService(
 					namespace + "." + "InterfaceIDLCaDSEV3RMIUltraSonic", ip,
-					3235);
-			stub.registerService(
-					"robi25" + "." + "InterfaceIDLCaDSEV3RMIMoveGripper", ip,
-					3232);
-			stub.registerService(
-					"robi25" + "." + "InterfaceIDLCaDSEV3RMIMoveHorizontal",
-					ip, 3233);
-			stub.registerService(
-					"robi25" + "." + "InterfaceIDLCaDSEV3RMIMoveVertical", ip,
-					3234);
-			stub.registerService(
-					"robi25" + "." + "InterfaceIDLCaDSEV3RMIUltraSonic", ip,
-					3235);
-			stub.registerService(
-					"robocop" + "." + "InterfaceIDLCaDSEV3RMIMoveGripper", ip,
-					3232);
-			stub.registerService(
-					"robocop" + "." + "InterfaceIDLCaDSEV3RMIMoveHorizontal",
-					ip, 3233);
-			stub.registerService(
-					"robocop" + "." + "InterfaceIDLCaDSEV3RMIMoveVertical", ip,
-					3234);
-			stub.registerService(
-					"robocop" + "." + "InterfaceIDLCaDSEV3RMIUltraSonic", ip,
-					3235);
+					port + 3);
+		} else {
+			throw new IllegalArgumentException("Illegal Number of Arguments.");
 		}
 
 		// Get Roboter.
@@ -129,17 +106,17 @@ public class RecieverManager {
 
 		// Threads für jeden Dienst
 		Thread moveGripperProviderThread = new Thread(new Revciever(
-				new IDLCaDSEV3RMIMoveGripperSkeleton(gripper), 3232));
+				new IDLCaDSEV3RMIMoveGripperSkeleton(gripper), port));
 
 		Thread moveHorizontalProviderThread = new Thread(new Revciever(
 				new IIDLCaDSEV3RMIMoveHorizontalSkeleton(moveHorizontal),
-				3233));
+				port+1));
 
 		Thread moveVerticalProviderThread = new Thread(new Revciever(
-				new IIDLCaDSEV3RMIMoveVerticalSkeleton(moveVertical), 3234));
+				new IIDLCaDSEV3RMIMoveVerticalSkeleton(moveVertical), port+2));
 
 		Thread ultraSonicProviderThread = new Thread(new Revciever(
-				new IIDLCaDSEV3RMIUltraSonicSkeleton(ultraSonic), 3235));
+				new IIDLCaDSEV3RMIUltraSonicSkeleton(ultraSonic), port+3));
 
 		moveGripperProviderThread.start();
 		moveHorizontalProviderThread.start();
