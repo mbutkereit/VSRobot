@@ -1,0 +1,5 @@
+package implementation;
+
+public enum Zustand {
+	LINKS, RECHTS, HOCH, RUNTER, STOPV, STOPH, HORIZONTAL, VERTIKAL,STOP,ABGESCHLOSSEN
+}

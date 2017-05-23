@@ -8,6 +8,8 @@ import org.cads.ev3.middleware.CaDSEV3RobotType;
 
 import consumer.FifoQueue;
 import consumer.KommunikationsThread;
+import implementation.BewegungsSteuerung;
+import implementation.RoboterBewegung;
 import others.RobotImplementationFactory;
 import others.RobotStatusManager;
 import provider.IDLCaDSEV3RMIMoveGripperSkeleton;
@@ -90,9 +92,14 @@ public class RecieverManager {
 		RobotStatusManager manager = new RobotStatusManager();
 		CaDSEV3RobotStudentImplementation robot = CaDSEV3RobotStudentImplementation
 				.createInstance(CaDSEV3RobotType.SIMULATION, manager, manager);
+		
+		RoboterBewegung roboterbewegung = new RoboterBewegung(robot);
+		roboterbewegung.start();
+		BewegungsSteuerung steuerung = new BewegungsSteuerung(manager,roboterbewegung );
+		steuerung.start();
 
 		RobotImplementationFactory factory = new RobotImplementationFactory(
-				robot);
+				robot,steuerung);
 
 		// Get Implementations
 		InterfaceIDLCaDSEV3RMIMoveGripper gripper = factory

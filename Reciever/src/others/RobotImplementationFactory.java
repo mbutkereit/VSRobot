@@ -1,5 +1,6 @@
 package others;
 
+import implementation.BewegungsSteuerung;
 import implementation.IDLCaDSEV3RMIMoveGripperImplementation;
 import implementation.IIDLCaDSEV3RMIMoveHorizontalImplementation;
 import implementation.IIDLCaDSEV3RMIMoveVerticalImplementation;
@@ -23,14 +24,20 @@ public class RobotImplementationFactory {
 	 * Instanz des Roboters
 	 */
 	private CaDSEV3RobotStudentImplementation robot;
+	
+	/**
+	 * Instanz der Bewegungssteuerung
+	 */
+	private BewegungsSteuerung steuerung;
 
 	/**
 	 * Konstruktor
 	 * 
 	 * @param robot
 	 */
-	public RobotImplementationFactory(CaDSEV3RobotStudentImplementation robot) {
+	public RobotImplementationFactory(CaDSEV3RobotStudentImplementation robot,BewegungsSteuerung steuerung) {
 		this.robot = robot;
+		this.steuerung=steuerung;
 	}
 
 	/**
@@ -48,7 +55,7 @@ public class RobotImplementationFactory {
 	 * @return
 	 */
 	public InterfaceIIDLCaDSEV3RMIMoveHorizontal getMoveHorizontalImplementation() {
-		return new IIDLCaDSEV3RMIMoveHorizontalImplementation(this.robot);
+		return new IIDLCaDSEV3RMIMoveHorizontalImplementation(this.robot,steuerung);
 	}
 
 	/**
@@ -57,7 +64,7 @@ public class RobotImplementationFactory {
 	 * @return
 	 */
 	public InterfaceIIDLCaDSEV3RMIMoveVertical getMoveVerticalImplementation() {
-		return new IIDLCaDSEV3RMIMoveVerticalImplementation(this.robot);
+		return new IIDLCaDSEV3RMIMoveVerticalImplementation(this.robot,steuerung);
 	}
 
 	/**

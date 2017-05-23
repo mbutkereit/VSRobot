@@ -12,33 +12,29 @@ import interfaces.InterfaceIIDLCaDSEV3RMIMoveVertical;
  */
 public class IIDLCaDSEV3RMIMoveVerticalImplementation implements InterfaceIIDLCaDSEV3RMIMoveVertical {
 	
-	private CaDSEV3RobotStudentImplementation call = null;
-	private static int percent = 50;
+//	private CaDSEV3RobotStudentImplementation call = null;
+	private BewegungsSteuerung steuerung = null;
 	
 	public IIDLCaDSEV3RMIMoveVerticalImplementation(
-			CaDSEV3RobotStudentImplementation roboter) {
-		this.call = roboter;
+			CaDSEV3RobotStudentImplementation roboter,BewegungsSteuerung steuerung) {
+		this.steuerung=steuerung;
+//		this.call = roboter;
 	}
 
     public int moveVerticalToPercent(int paramInt1, int paramInt2) {
-    	if(percent==50){
-    	 	call.moveUp();
-    	 	percent=51;
-    	}else{
-    		call.moveDown();
-    		percent=50;
-    	}
-   
+		steuerung.setWertV(paramInt2);
+		steuerung.setBew(Bewegung.VERTIKAL);
+		System.out.println("Bewege im Vertikalen zu"+paramInt2);
 		return 0;
     }
     
     public int stop(int paramInt) {
-		call.stop_v();
+		steuerung.setBew(Bewegung.STOP);
 		return 0;
     }
     
     public int getCurrentVerticalPercent() {
-		return percent;
+		return 0;
     }
     
 
