@@ -3,6 +3,7 @@ package implementation;
 import org.cads.ev3.middleware.CaDSEV3RobotStudentImplementation;
 
 import interfaces.InterfaceIIDLCaDSEV3RMIMoveHorizontal;
+import others.RobotStatusManager;
 
 /**
  * Die Klasse ist verantwortlich für die Implementierung.
@@ -16,16 +17,23 @@ public class IIDLCaDSEV3RMIMoveHorizontalImplementation
 	// private CaDSEV3RobotStudentImplementation call = null;
 	private BewegungsSteuerung steuerung = null;
 
+	/**
+	 * Statusmanager
+	 */
+	private RobotStatusManager manager = null;
+
 	public IIDLCaDSEV3RMIMoveHorizontalImplementation(
-			CaDSEV3RobotStudentImplementation roboter,BewegungsSteuerung steuerung ) {
-		this.steuerung=steuerung;
+			CaDSEV3RobotStudentImplementation roboter,
+			BewegungsSteuerung steuerung, RobotStatusManager manager) {
+		this.steuerung = steuerung;
+		this.manager=manager;
 		// this.call = roboter;
 	}
 
 	public int moveHorizontalToPercent(int paramInt1, int paramInt2) {
 		steuerung.setWertH(paramInt2);
 		steuerung.setBew(Bewegung.HORIZONTAL);
-		System.out.println("Bewege im Horizontalen zu "+paramInt2+".");
+		System.out.println("Bewege im Horizontalen zu " + paramInt2 + ".");
 		return 0;
 	}
 
@@ -35,6 +43,6 @@ public class IIDLCaDSEV3RMIMoveHorizontalImplementation
 	}
 
 	public int getCurrentHorizontalPercent() {
-		return 0;
+		return manager.getCurrentPositionH();
 	}
 }

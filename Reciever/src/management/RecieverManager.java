@@ -99,7 +99,7 @@ public class RecieverManager {
 		steuerung.start();
 
 		RobotImplementationFactory factory = new RobotImplementationFactory(
-				robot,steuerung);
+				robot,steuerung,manager);
 
 		// Get Implementations
 		InterfaceIDLCaDSEV3RMIMoveGripper gripper = factory

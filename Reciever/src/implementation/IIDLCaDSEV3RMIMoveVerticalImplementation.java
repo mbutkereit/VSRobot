@@ -3,6 +3,7 @@ package implementation;
 import org.cads.ev3.middleware.CaDSEV3RobotStudentImplementation;
 
 import interfaces.InterfaceIIDLCaDSEV3RMIMoveVertical;
+import others.RobotStatusManager;
 
 /**
  * Die Klasse ist verantwortlich für die Implementierung.
@@ -15,9 +16,16 @@ public class IIDLCaDSEV3RMIMoveVerticalImplementation implements InterfaceIIDLCa
 //	private CaDSEV3RobotStudentImplementation call = null;
 	private BewegungsSteuerung steuerung = null;
 	
+	/**
+	 * Statusmanager
+	 */
+	private RobotStatusManager manager = null;
+	
+	
 	public IIDLCaDSEV3RMIMoveVerticalImplementation(
-			CaDSEV3RobotStudentImplementation roboter,BewegungsSteuerung steuerung) {
+			CaDSEV3RobotStudentImplementation roboter,BewegungsSteuerung steuerung,RobotStatusManager manager ) {
 		this.steuerung=steuerung;
+		this.manager=manager;
 //		this.call = roboter;
 	}
 
@@ -34,7 +42,7 @@ public class IIDLCaDSEV3RMIMoveVerticalImplementation implements InterfaceIIDLCa
     }
     
     public int getCurrentVerticalPercent() {
-		return 0;
+		return manager.getCurrentPositionV();
     }
     
 

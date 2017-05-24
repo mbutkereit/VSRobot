@@ -65,9 +65,9 @@ public class Forwarder implements InterfaceForwarder {
 				try {
 					dsocket.receive(recieve_packet);
 					answerRecieved = true;
-					try (InputStream is2 = new ByteArrayInputStream(buffer, 0,
-							length); JsonReader rdr2 = Json.createReader(is)) {
-						objektReturn = rdr.readObject();
+					try (InputStream is2 = new ByteArrayInputStream(recieve_packet.getData(), 0,
+							recieve_packet.getData().length); JsonReader rdr2 = Json.createReader(is2)) {
+						objektReturn = rdr2.readObject();
 						System.out.println("Antwort vom Provider::::::"
 								+ objektReturn.toString());
 
@@ -82,6 +82,7 @@ public class Forwarder implements InterfaceForwarder {
 			}
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			response = Json.createObjectBuilder();
 			response.add("Type", "Response");
 			response.add("Exception", "ClassNotFoundException");

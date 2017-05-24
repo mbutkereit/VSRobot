@@ -43,7 +43,7 @@ public class Revciever implements Runnable {
 				JsonObject response = this.skeleton.handle(buffer, packet.getLength());
 				System.out.println(response.toString());
 
-				packet.setLength(buffer.length);
+			//	packet.setLength(buffer.length);
 				
 				byte[] data = response.toString().getBytes();
 				DatagramPacket send_packet = new DatagramPacket(data, data.length, packet.getAddress(),packet.getPort());

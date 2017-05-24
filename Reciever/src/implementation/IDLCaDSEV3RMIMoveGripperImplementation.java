@@ -3,6 +3,7 @@ package implementation;
 import org.cads.ev3.middleware.CaDSEV3RobotStudentImplementation;
 
 import interfaces.InterfaceIDLCaDSEV3RMIMoveGripper;
+import others.RobotStatusManager;
 
 /**
  * Die Klasse ist verantwortlich für die Implementierung.
@@ -12,33 +13,36 @@ import interfaces.InterfaceIDLCaDSEV3RMIMoveGripper;
  */
 public class IDLCaDSEV3RMIMoveGripperImplementation implements InterfaceIDLCaDSEV3RMIMoveGripper {
 
+	/**
+	 * Roboter
+	 */
 	private CaDSEV3RobotStudentImplementation call = null;
-	private static boolean gripperClosed = false;
+	
+	/**
+	 * Statusmanager
+	 */
+	private RobotStatusManager manager = null;
 
 	public IDLCaDSEV3RMIMoveGripperImplementation(
-			CaDSEV3RobotStudentImplementation roboter) {
+			CaDSEV3RobotStudentImplementation roboter,RobotStatusManager manager) {
 		this.call = roboter;
+		this.manager=manager;
 	}
 
 	@Override
 	public int closeGripper(int arg0) {
 		this.call.doClose();
-		IDLCaDSEV3RMIMoveGripperImplementation.gripperClosed = true;
 		return 0;
 	}
 
 	@Override
 	public int isGripperClosed() {
-		if (IDLCaDSEV3RMIMoveGripperImplementation.gripperClosed == false) {
-			return 1;
-		}
-		return 0;
+		return manager.getIsGripperClosed();
 	}
 
 	@Override
 	public int openGripper(int arg0) {
 		this.call.doOpen();
-		IDLCaDSEV3RMIMoveGripperImplementation.gripperClosed = false;
 		return 0;
 	}
     

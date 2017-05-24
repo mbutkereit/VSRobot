@@ -29,15 +29,21 @@ public class RobotImplementationFactory {
 	 * Instanz der Bewegungssteuerung
 	 */
 	private BewegungsSteuerung steuerung;
+	
+	/**
+	 * Robotstatusmanager
+	 */
+	private RobotStatusManager manager;
 
 	/**
 	 * Konstruktor
 	 * 
 	 * @param robot
 	 */
-	public RobotImplementationFactory(CaDSEV3RobotStudentImplementation robot,BewegungsSteuerung steuerung) {
+	public RobotImplementationFactory(CaDSEV3RobotStudentImplementation robot,BewegungsSteuerung steuerung,RobotStatusManager manager) {
 		this.robot = robot;
 		this.steuerung=steuerung;
+		this.manager=manager;
 	}
 
 	/**
@@ -46,7 +52,7 @@ public class RobotImplementationFactory {
 	 * @return
 	 */
 	public InterfaceIDLCaDSEV3RMIMoveGripper getMoveGripperImplementation() {
-		return new IDLCaDSEV3RMIMoveGripperImplementation(this.robot);
+		return new IDLCaDSEV3RMIMoveGripperImplementation(this.robot,manager);
 	}
 
 	/**
@@ -55,7 +61,7 @@ public class RobotImplementationFactory {
 	 * @return
 	 */
 	public InterfaceIIDLCaDSEV3RMIMoveHorizontal getMoveHorizontalImplementation() {
-		return new IIDLCaDSEV3RMIMoveHorizontalImplementation(this.robot,steuerung);
+		return new IIDLCaDSEV3RMIMoveHorizontalImplementation(this.robot,steuerung,manager);
 	}
 
 	/**
@@ -64,7 +70,7 @@ public class RobotImplementationFactory {
 	 * @return
 	 */
 	public InterfaceIIDLCaDSEV3RMIMoveVertical getMoveVerticalImplementation() {
-		return new IIDLCaDSEV3RMIMoveVerticalImplementation(this.robot,steuerung);
+		return new IIDLCaDSEV3RMIMoveVerticalImplementation(this.robot,steuerung,manager);
 	}
 
 	/**

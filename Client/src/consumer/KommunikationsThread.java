@@ -35,7 +35,7 @@ public class KommunikationsThread extends Thread {
 	/**
 	 * Die Adresse vom Server.
 	 */
-	public static final String IP_ADRESSE = "127.0.0.1";
+	public static  String IP_ADRESSE = "127.0.0.1";
 
 	/**
 	 * Enthält die Nachrichten, die verschickt werden sollen.

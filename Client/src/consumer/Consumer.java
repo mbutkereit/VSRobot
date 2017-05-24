@@ -18,10 +18,16 @@ public class Consumer {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+
+		if (args.length == 1) {
+			KommunikationsThread.IP_ADRESSE = args[0];
+		} else {
+			KommunikationsThread.IP_ADRESSE = "127.0.0.1";
+		}
 		// Logik
 		FifoQueue sendQueue = new FifoQueue();
 		FifoQueue recieveQueue = new FifoQueue();
-		Controller.roboternamenslisten= new LinkedList<String>();
+		Controller.roboternamenslisten = new LinkedList<String>();
 
 		// Starte 5 Sender zum Kommunizieren als Threads
 		KommunikationsThread[] senderThreadArray = new KommunikationsThread[5];
@@ -37,7 +43,7 @@ public class Consumer {
 
 		// Gui
 		CaDSRobotGUISwing gui = new CaDSRobotGUISwing(c, c, c, c, c);
-	//	gui.startGUIRefresh(5000);
+		gui.startGUIRefresh(1000);
 		GuiUpdater updater = new GuiUpdater(recieveQueue, gui);
 		updater.start();
 
