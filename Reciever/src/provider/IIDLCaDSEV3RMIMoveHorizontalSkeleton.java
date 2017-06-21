@@ -52,7 +52,7 @@ public class IIDLCaDSEV3RMIMoveHorizontalSkeleton implements InterfaceSkeleton {
 			
 			String robotername = objektname.split("\\.")[0];
 			if(robotername.equals(RecieverManager.namespace)== false ){
-				throw new Exception("Wrong Robotname.");
+				//		throw new Exception("Wrong Robotname.");
 			}
 
 			if (!(className.equals(

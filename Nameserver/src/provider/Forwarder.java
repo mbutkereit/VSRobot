@@ -34,9 +34,8 @@ public class Forwarder implements InterfaceForwarder {
 				JsonReader rdr = Json.createReader(is)) {
 			JsonObject obj = rdr.readObject();
 
-			System.out.println(obj.toString());
+			System.err.println("Empfnagen:::::::"+obj.toString());
 			String className = obj.getString("ObjectName");
-			// String methodName = obj.getString("FunctionName");
 
 			// Initialisieren
 			boolean answerRecieved = false;
@@ -47,6 +46,7 @@ public class Forwarder implements InterfaceForwarder {
 			int port = list.getPortFromService(className);
 			InetAddress ip = list.getIpFromService(className);
 			if (port == -1 || ip == null) {
+				System.err.println("Unbekannte Ip: "+ip+" oder Port: "+port);
 				throw new Exception();
 			}
 

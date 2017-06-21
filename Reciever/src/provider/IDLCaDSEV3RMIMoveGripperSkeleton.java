@@ -53,7 +53,7 @@ public class IDLCaDSEV3RMIMoveGripperSkeleton implements InterfaceSkeleton {
 			response.add("FunctionName",methodName);
 			
 			if(robotername.equals(RecieverManager.namespace) ==false){
-				throw new Exception("Wrong Robotname.");
+		//		throw new Exception("Wrong Robotname.");
 			}
 
 			if (!(className
