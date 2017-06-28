@@ -47,7 +47,7 @@ public class Forwarder implements InterfaceForwarder {
 			InetAddress ip = list.getIpFromService(className);
 			if (port == -1 || ip == null) {
 				System.err.println("Unbekannte Ip: "+ip+" oder Port: "+port);
-				throw new Exception();
+				throw new Exception(className);
 			}
 
 			byte[] data = obj.toString().getBytes();
@@ -82,7 +82,7 @@ public class Forwarder implements InterfaceForwarder {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println("Unbekannter Robotername: "+e.getMessage());
 			response = Json.createObjectBuilder();
 			response.add("Type", "Response");
 			response.add("Exception", "ClassNotFoundException");
